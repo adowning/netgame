@@ -2,62 +2,72 @@
 
 namespace App\Games\BananasNG;
 
+// Autoload the GameCalculator class
 require_once 'GameCalculator.php';
 
 class Server
 {
-    public function handle($postData)
+    /**
+     * Handles the request from the TypeScript server.
+     * This method is the single entry point for the PHP calculation engine.
+     */
+    public function handle()
     {
         try {
+            // The TypeScript server will send all necessary data in the request body.
+            $postData = json_decode(trim(file_get_contents('php://input')), true);
+
             if (!$postData || !isset($postData['gameData']) || !isset($postData['action'])) {
-                return $this->sendError('Invalid input data');
+                $this->sendError('Invalid input data');
             }
 
+            // The only action supported by this engine is 'calculateSpin'.
             if ($postData['action'] !== 'calculateSpin') {
-                return $this->sendError('Unknown action');
+                $this->sendError('Unknown action');
             }
 
+            // The gameData object contains all the necessary state and configuration
+            // provided by the TypeScript server.
             $gameData = (object)$postData['gameData'];
 
+            // Instantiate the pure calculation engine.
             $calculator = new GameCalculator($gameData);
+
+            // Perform the spin calculation.
             $result = $calculator->calculateSpin($postData);
 
-            return $this->sendResponse($result);
+            // The result is sent back to the TypeScript server for processing.
+            $this->sendResponse($result);
 
         } catch (\Throwable $e) {
-            return $this->sendError('Calculation error: ' . $e->getMessage());
+            // In case of any error, send a structured error response.
+            $this->sendError('Calculation error: ' . $e->getMessage());
         }
     }
 
+    /**
+     * Sends a JSON-formatted success response.
+     */
     private function sendResponse($data)
     {
-        return ['status' => 'success', 'data' => $data];
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'success', 'data' => $data]);
+        exit();
     }
 
+    /**
+     * Sends a JSON-formatted error response.
+     */
     private function sendError($message)
     {
-        return ['status' => 'error', 'message' => $message];
+        header('Content-Type: application/json');
+        http_response_code(400);
+        echo json_encode(['status' => 'error', 'message' => $message]);
+        exit();
     }
 }
 
-// Execution logic for both CLI and HTTP requests
-if (php_sapi_name() === 'cli') {
-    $input = json_decode(file_get_contents('php://stdin'), true);
-    $server = new Server();
-    $result = $server->handle($input);
-    echo json_encode($result);
-} elseif (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    $server = new Server();
-    $result = $server->handle($input);
-    header('Content-Type: application/json');
-    if($result['status'] === 'error') {
-        http_response_code(400);
-    }
-    echo json_encode($result);
-} else {
-    if (isset($_SERVER['REQUEST_METHOD'])) {
-        http_response_code(405);
-        echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
-    }
-}
+// Since this script is now a standalone entry point, we instantiate and run the server.
+// The TypeScript server will call this PHP script directly.
+$server = new Server();
+$server->handle();
