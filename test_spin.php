@@ -1,158 +1,101 @@
 <?php
 
 /**
- * Test script for PHP Calculator integration
- * This script can be called directly or via the PHPCalculator class
+ * Test script for PHP Calculator integration for Royal40FruitsNG
  */
 
-require_once __DIR__ . '/new/AfricanKingNG/DirectPHPHandler.php';
+// Include the DirectPHPHandler for the game being tested
+require_once __DIR__ . '/new/Royal40FruitsNG/DirectPHPHandler.php';
 
-// Test data matching the TypeScript GameData interface
+// Test data matching the TypeScript GameData interface, tailored for Royal40FruitsNG
 $testGameData = [
     'user' => [
-        'id' => 'test_user_123',
-        'balance' => 1000.00, // In game denomination (e.g., cents)
-        'count_balance' => 500.00,
-        'address' => 100.00,
-        'shop_id' => 'test_shop',
-        'username' => 'testuser',
-        'email' => 'test@example.com',
+        'id' => 'test_user_456',
+        'balance' => 2000.00,
+        'count_balance' => 1000.00,
+        'address' => 0,
+        'shop_id' => 'test_shop_b',
+        'username' => 'testuser_b',
+        'email' => 'test_b@example.com',
         'status' => 'active'
     ],
     'game' => [
-        'id' => 'AfricanKingNG',
-        'name' => 'African King NG',
-        'denomination' => 1,
-        'bet' => ['0.01', '0.02', '0.05', '0.10', '0.20', '0.50', '1.00', '2.00'],
-        'stat_in' => 10000,
-        'stat_out' => 9500,
-        'bank' => 5000,
-        'shop_id' => 'test_shop',
+        'id' => 'Royal40FruitsNG',
+        'name' => 'Royal 40 Fruits NG',
+        'denomination' => 0.01,
+        'bet' => ['1', '2', '3', '4', '5', '10', '15', '20', '30', '40', '50', '100', '200'],
+        'stat_in' => 15000,
+        'stat_out' => 14000,
+        'bank' => 7500,
+        'shop_id' => 'test_shop_b',
         'view' => true,
-        'slotBonus' => true,
+        'slotBonus' => false, // No bonus game in Royal40FruitsNG
         'increaseRTP' => 1,
-        'slotWildMpl' => 1,
+        'slotWildMpl' => 1, // No wild multiplier in this game
         'slotFreeMpl' => 1,
-        'slotFreeCount' => 8
+        'slotFreeCount' => 0, // No free spins in this game
+        'lines' => 40 // Royal40FruitsNG has 40 paylines
     ],
     'shop' => [
-        'id' => 'test_shop',
-        'name' => 'Test Casino',
-        'percent' => 95,
-        'max_win' => 10000,
+        'id' => 'test_shop_b',
+        'name' => 'Test Casino B',
+        'percent' => 94,
+        'max_win' => 2000000,
         'currency' => 'USD',
         'is_blocked' => false
     ],
-    'bank' => 5000,
-    'jackpots' => [
-        [
-            'id' => 'jackpot_1',
-            'balance' => 1000,
-            'percent' => 1,
-            'user_id' => null,
-            'shop_id' => 'test_shop'
-        ]
+    'bank' => 7500,
+    'rtp' => [
+        'spinChance' => 10,
+        'bonusChance' => 5000 // High value as there's no bonus
     ],
-    'sessionData' => [
-        'bonusWin' => 0,
-        'freeGames' => 0,
-        'currentFreeGame' => 0,
-        'bonusSymbol' => -1,
-        'totalWin' => 0,
-        'freeBalance' => 0,
-        'freeStartWin' => 0
-    ],
-    'staticData' => []
+    'linesId' => [
+        [1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3], [4, 4, 4, 4, 4],
+        [1, 2, 3, 2, 1], [2, 3, 4, 3, 2], [3, 2, 1, 2, 3], [4, 3, 2, 3, 4],
+        [1, 1, 1, 1, 2], [2, 2, 2, 2, 1], [3, 3, 3, 3, 4], [4, 4, 4, 4, 3],
+        [1, 2, 2, 2, 2], [2, 2, 2, 2, 3], [3, 3, 3, 3, 2], [4, 3, 3, 3, 3],
+        [2, 1, 1, 1, 1], [2, 3, 3, 3, 3], [3, 2, 2, 2, 2], [3, 4, 4, 4, 4],
+        [1, 1, 1, 2, 3], [2, 2, 2, 3, 4], [3, 3, 3, 2, 1], [4, 4, 4, 3, 2],
+        [1, 2, 3, 3, 3], [2, 3, 4, 4, 4], [3, 2, 1, 1, 1], [4, 3, 2, 2, 2],
+        [1, 1, 2, 1, 1], [2, 2, 1, 2, 2], [3, 3, 4, 3, 3], [4, 4, 3, 4, 4],
+        [1, 2, 2, 2, 1], [2, 2, 3, 2, 2], [3, 3, 2, 3, 3], [4, 3, 3, 3, 4],
+        [2, 1, 1, 1, 2], [2, 3, 3, 3, 2], [3, 2, 2, 2, 3], [3, 4, 4, 4, 3]
+    ]
 ];
 
 // Test spin request
 $testSpinRequest = [
     'action' => 'calculateSpin',
     'slotEvent' => 'bet',
-    'lines' => 30,
-    'betLine' => 0.01,
-    'linesId' => [
-        [2, 2, 2, 2, 2], [1, 1, 1, 1, 1], [3, 3, 3, 3, 3], // Standard lines
-        [1, 2, 3, 2, 1], [3, 2, 1, 2, 3], [2, 1, 2, 3, 2],
-        [2, 3, 2, 1, 2], [1, 1, 2, 3, 3], [3, 3, 2, 1, 1],
-        [1, 2, 1, 2, 1], [3, 2, 3, 2, 3], [2, 1, 1, 1, 2],
-        [1, 3, 3, 3, 1], [1, 2, 2, 2, 1], [3, 2, 2, 2, 3],
-        [2, 2, 1, 2, 2], [2, 2, 3, 2, 2], [1, 3, 1, 3, 1],
-        [3, 1, 3, 1, 3], [3, 1, 2, 1, 3], [2, 1, 2, 1, 2],
-        [2, 3, 2, 3, 2], [1, 2, 1, 2, 1], [3, 2, 1, 2, 3],
-        [3, 1, 1, 1, 3], [1, 3, 2, 3, 1], [2, 2, 2, 1, 2],
-        [2, 2, 2, 3, 2], [1, 1, 3, 2, 2], [3, 3, 1, 2, 1],
-        [1, 2, 3, 1, 2], [2, 3, 1, 3, 2]
-    ],
+    'betLine' => 1,
     'gameData' => $testGameData
 ];
 
-// Main execution
-if ($argc > 1 && $argv[1] === '--cli') {
-    // CLI mode - expect JSON input from stdin
-    $input = json_decode(file_get_contents('php://stdin'), true);
-    if (!$input) {
-        fwrite(STDERR, "Error: Invalid JSON input\n");
-        exit(1);
-    }
+// Create the handler instance
+$handler = new \App\Games\Royal40FruitsNG\DirectPHPHandler();
 
-    $handler = new DirectPHPHandler();
-    $result = $handler->handle($input);
+// Prepare the input for the handler by wrapping it
+$inputForHandler = json_encode($testSpinRequest);
 
-    echo json_encode($result, JSON_PRETTY_PRINT);
-    exit(0);
-}
+// Temporarily replace php://input for the test
+$tempStream = fopen('php://temp', 'r+');
+fwrite($tempStream, $inputForHandler);
+rewind($tempStream);
+$oldStdin = fopen('php://stdin', 'r');
+stream_socket_shutdown($oldStdin, STREAM_SHUT_RDWR); // Close existing stdin
+$GLOBALS['STDIN'] = $tempStream;
 
-// Web mode or direct execution
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle POST request
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (!$input) {
-        http_response_code(400);
-        echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
-        exit;
-    }
 
-    $handler = new DirectPHPHandler();
-    $result = $handler->handle($input);
-
-    header('Content-Type: application/json');
-    echo json_encode($result);
-    exit;
-}
-
-// Direct execution mode - run test
-echo "=== PHP Calculator Test ===\n\n";
-
-$handler = new DirectPHPHandler();
-$result = $handler->handle($testSpinRequest);
-
+echo "=== PHP Calculator Test for Royal40FruitsNG ===\n\n";
 echo "Request:\n";
 echo json_encode($testSpinRequest, JSON_PRETTY_PRINT) . "\n\n";
 
 echo "Response:\n";
-echo json_encode($result, JSON_PRETTY_PRINT) . "\n\n";
+// Execute the handler, which will read from our temporary stream
+$handler->handle();
 
-if ($result['status'] === 'success') {
-    $data = $result['data'];
-    echo "Spin Results:\n";
-    echo "- Total Win: {$data['totalWin']}\n";
-    echo "- Scatters Count: {$data['scattersCount']}\n";
-    echo "- Win String: {$data['winString']}\n";
-    echo "- Symbol String: {$data['symb']}\n";
+// Restore original stdin
+$GLOBALS['STDIN'] = $oldStdin;
+fclose($tempStream);
 
-    // Parse reels
-    $reels = $data['reels'];
-    echo "\nReel Results:\n";
-    for ($i = 1; $i <= 5; $i++) {
-        $reel = $reels["reel{$i}"];
-        echo "Reel {$i}: [" . implode(', ', $reel) . "]\n";
-    }
-    echo "RP: [" . implode(', ', $reels['rp']) . "]\n";
-} else {
-    echo "Error: {$result['message']}\n";
-}
-
-echo "\n=== Test Complete ===\n";
-
-?>
+echo "\n\n=== Test Complete ===\n";
