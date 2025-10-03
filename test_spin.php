@@ -1,158 +1,32 @@
 <?php
 
-/**
- * Test script for PHP Calculator integration
- * This script can be called directly or via the PHPCalculator class
- */
+// Load the test data from the JSON file
+$testDataJson = file_get_contents('test_mmalegends.json');
 
-require_once __DIR__ . '/new/AfricanKingNG/DirectPHPHandler.php';
+// Escape the JSON for shell usage to ensure it's passed as a single string
+$escapedData = escapeshellarg($testDataJson);
 
-// Test data matching the TypeScript GameData interface
-$testGameData = [
-    'user' => [
-        'id' => 'test_user_123',
-        'balance' => 1000.00, // In game denomination (e.g., cents)
-        'count_balance' => 500.00,
-        'address' => 100.00,
-        'shop_id' => 'test_shop',
-        'username' => 'testuser',
-        'email' => 'test@example.com',
-        'status' => 'active'
-    ],
-    'game' => [
-        'id' => 'AfricanKingNG',
-        'name' => 'African King NG',
-        'denomination' => 1,
-        'bet' => ['0.01', '0.02', '0.05', '0.10', '0.20', '0.50', '1.00', '2.00'],
-        'stat_in' => 10000,
-        'stat_out' => 9500,
-        'bank' => 5000,
-        'shop_id' => 'test_shop',
-        'view' => true,
-        'slotBonus' => true,
-        'increaseRTP' => 1,
-        'slotWildMpl' => 1,
-        'slotFreeMpl' => 1,
-        'slotFreeCount' => 8
-    ],
-    'shop' => [
-        'id' => 'test_shop',
-        'name' => 'Test Casino',
-        'percent' => 95,
-        'max_win' => 10000,
-        'currency' => 'USD',
-        'is_blocked' => false
-    ],
-    'bank' => 5000,
-    'jackpots' => [
-        [
-            'id' => 'jackpot_1',
-            'balance' => 1000,
-            'percent' => 1,
-            'user_id' => null,
-            'shop_id' => 'test_shop'
-        ]
-    ],
-    'sessionData' => [
-        'bonusWin' => 0,
-        'freeGames' => 0,
-        'currentFreeGame' => 0,
-        'bonusSymbol' => -1,
-        'totalWin' => 0,
-        'freeBalance' => 0,
-        'freeStartWin' => 0
-    ],
-    'staticData' => []
-];
+// Construct the command to echo the data and pipe it to the server script's stdin
+$command = "echo $escapedData | php new/MMALegendsNG/Server.php";
 
-// Test spin request
-$testSpinRequest = [
-    'action' => 'calculateSpin',
-    'slotEvent' => 'bet',
-    'lines' => 30,
-    'betLine' => 0.01,
-    'linesId' => [
-        [2, 2, 2, 2, 2], [1, 1, 1, 1, 1], [3, 3, 3, 3, 3], // Standard lines
-        [1, 2, 3, 2, 1], [3, 2, 1, 2, 3], [2, 1, 2, 3, 2],
-        [2, 3, 2, 1, 2], [1, 1, 2, 3, 3], [3, 3, 2, 1, 1],
-        [1, 2, 1, 2, 1], [3, 2, 3, 2, 3], [2, 1, 1, 1, 2],
-        [1, 3, 3, 3, 1], [1, 2, 2, 2, 1], [3, 2, 2, 2, 3],
-        [2, 2, 1, 2, 2], [2, 2, 3, 2, 2], [1, 3, 1, 3, 1],
-        [3, 1, 3, 1, 3], [3, 1, 2, 1, 3], [2, 1, 2, 1, 2],
-        [2, 3, 2, 3, 2], [1, 2, 1, 2, 1], [3, 2, 1, 2, 3],
-        [3, 1, 1, 1, 3], [1, 3, 2, 3, 1], [2, 2, 2, 1, 2],
-        [2, 2, 2, 3, 2], [1, 1, 3, 2, 2], [3, 3, 1, 2, 1],
-        [1, 2, 3, 1, 2], [2, 3, 1, 3, 2]
-    ],
-    'gameData' => $testGameData
-];
+// Execute the command using shell_exec
+$output = shell_exec($command);
 
-// Main execution
-if ($argc > 1 && $argv[1] === '--cli') {
-    // CLI mode - expect JSON input from stdin
-    $input = json_decode(file_get_contents('php://stdin'), true);
-    if (!$input) {
-        fwrite(STDERR, "Error: Invalid JSON input\n");
-        exit(1);
-    }
+// Print the results
+echo "--- Server Response --- \n";
 
-    $handler = new DirectPHPHandler();
-    $result = $handler->handle($input);
-
-    echo json_encode($result, JSON_PRETTY_PRINT);
-    exit(0);
-}
-
-// Web mode or direct execution
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle POST request
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (!$input) {
-        http_response_code(400);
-        echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
-        exit;
-    }
-
-    $handler = new DirectPHPHandler();
-    $result = $handler->handle($input);
-
-    header('Content-Type: application/json');
-    echo json_encode($result);
-    exit;
-}
-
-// Direct execution mode - run test
-echo "=== PHP Calculator Test ===\n\n";
-
-$handler = new DirectPHPHandler();
-$result = $handler->handle($testSpinRequest);
-
-echo "Request:\n";
-echo json_encode($testSpinRequest, JSON_PRETTY_PRINT) . "\n\n";
-
-echo "Response:\n";
-echo json_encode($result, JSON_PRETTY_PRINT) . "\n\n";
-
-if ($result['status'] === 'success') {
-    $data = $result['data'];
-    echo "Spin Results:\n";
-    echo "- Total Win: {$data['totalWin']}\n";
-    echo "- Scatters Count: {$data['scattersCount']}\n";
-    echo "- Win String: {$data['winString']}\n";
-    echo "- Symbol String: {$data['symb']}\n";
-
-    // Parse reels
-    $reels = $data['reels'];
-    echo "\nReel Results:\n";
-    for ($i = 1; $i <= 5; $i++) {
-        $reel = $reels["reel{$i}"];
-        echo "Reel {$i}: [" . implode(', ', $reel) . "]\n";
-    }
-    echo "RP: [" . implode(', ', $reels['rp']) . "]\n";
+// Try to pretty-print the JSON if it's valid, otherwise print the raw output
+$jsonOutput = json_decode($output);
+if (json_last_error() === JSON_ERROR_NONE) {
+    echo json_encode($jsonOutput, JSON_PRETTY_PRINT);
 } else {
-    echo "Error: {$result['message']}\n";
+    echo "Raw output (not valid JSON):\n";
+    echo $output;
 }
+echo "\n\n";
 
-echo "\n=== Test Complete ===\n";
-
-?>
+// Check if shell_exec returned null, which can indicate an error
+if ($output === null) {
+    echo "--- Errors ---\n";
+    echo "shell_exec may have failed. Ensure the command is correct and permissions are set.\n";
+}

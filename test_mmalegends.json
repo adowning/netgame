@@ -1,0 +1,45 @@
+{
+  "gameData": {
+    "user": {
+      "id": 1,
+      "balance": 1000,
+      "count_balance": 0,
+      "address": 0
+    },
+    "game": {
+      "id": 2,
+      "name": "MMALegendsNG",
+      "denomination": 0.01,
+      "rtp": 95,
+      "bet": ["1", "2", "5", "10"],
+      "stat_in": 0,
+      "stat_out": 0,
+      "slotBonus": true,
+      "increaseRTP": 1,
+      "slotWildMpl": 1,
+      "slotFreeMpl": 1
+    },
+    "shop": {
+      "percent": 95,
+      "max_win": 1000000
+    },
+    "bank": 10000
+  },
+  "spinData": {
+      "action": "calculateSpin",
+      "slotEvent": "bet",
+      "lines": 5,
+      "betLine": 1,
+      "linesId": [
+        [1, 1, 1, 1, 1, 1],
+        [2, 2, 2, 2, 2, 2],
+        [3, 3, 3, 3, 3, 3],
+        [4, 4, 4, 4, 4, 4],
+        [1, 2, 3, 3, 2, 1]
+      ]
+  },
+  "freeGames": {
+      "total": 0,
+      "current": 0
+  }
+}
