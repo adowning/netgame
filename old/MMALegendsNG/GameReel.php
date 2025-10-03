@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\MMALegendsNG
+namespace App\Games\MMALegendsNG
 {
     class GameReel
     {

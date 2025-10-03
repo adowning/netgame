@@ -1,15 +1,14 @@
+
 <?php 
-namespace VanguardLTE\Games\AfricanKingNG
+namespace App\Games\AfricanKingNG
 {
     set_time_limit(5);
+    use Illuminate\Support\Facades\Log;
+
     class Server
     {
-        public function get($request, $game)
+        public function handle($action, $userId, $user, $game, $shop, $postData, $gameStateData = [])
         {
-            function get_($request, $game)
-            {
-                \DB::transaction(function() use ($request, $game)
-                {
                     try
                     {
                         $userId = \Auth::id();
@@ -874,9 +873,7 @@ namespace VanguardLTE\Games\AfricanKingNG
                             file_put_contents(storage_path('logs/') . 'GameInternal.log', $slg . $strLog);
                         }
                     }
-                }, 5);
-            }
-            get_($request, $game);
+
         }
     }
 

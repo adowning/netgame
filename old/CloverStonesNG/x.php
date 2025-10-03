@@ -1,5 +1,5 @@
 <?php
-namespace VanguardLTE\Games\CloverStonesNG
+namespace App\Games\CloverStonesNG
 {
    class Server
     {

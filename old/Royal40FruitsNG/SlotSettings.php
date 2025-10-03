@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\Royal40FruitsNG
+namespace App\Games\Royal40FruitsNG
 {
     class SlotSettings
     {

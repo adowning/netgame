@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\BookOfNileLostChapterNG
+namespace App\Games\BookOfNileLostChapterNG
 {
     class SlotSettings
     {

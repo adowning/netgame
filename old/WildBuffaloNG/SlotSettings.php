@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\WildBuffaloNG
+namespace App\Games\WildBuffaloNG
 {
     class SlotSettings
     {

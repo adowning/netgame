@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\JackpotSevensNG
+namespace App\Games\JackpotSevensNG
 {
     class SlotSettings
     {

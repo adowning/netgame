@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\RedHotChilli7sNG
+namespace App\Games\RedHotChilli7sNG
 {
     class SlotSettings
     {

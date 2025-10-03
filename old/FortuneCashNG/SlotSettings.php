@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\FortuneCashNG
+namespace App\Games\FortuneCashNG
 {
     class SlotSettings
     {

@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\BookOfNileRevengeNG
+namespace App\Games\BookOfNileRevengeNG
 {
     class SlotSettings
     {

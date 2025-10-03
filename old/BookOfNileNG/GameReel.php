@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\BookOfNileNG
+namespace App\Games\BookOfNileNG
 {
     class GameReel
     {

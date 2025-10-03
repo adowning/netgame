@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\CrazyScientistNG
+namespace App\Games\CrazyScientistNG
 {
     class SlotSettings
     {

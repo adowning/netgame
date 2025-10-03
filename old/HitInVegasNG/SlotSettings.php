@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\HitInVegasNG
+namespace App\Games\HitInVegasNG
 {
     class SlotSettings
     {

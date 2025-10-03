@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\WolfReelsNG
+namespace App\Games\WolfReelsNG
 {
     class SlotSettings
     {

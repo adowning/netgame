@@ -1,15 +1,13 @@
 <?php 
-namespace VanguardLTE\Games\Royal40FruitsNG
+namespace App\Games\Royal40FruitsNG
 {
     set_time_limit(5);
+    use Illuminate\Support\Facades\Log;
+
     class Server
     {
-        public function get($request, $game)
+        public function handle($action, $userId, $user, $game, $shop, $postData, $gameStateData = [])
         {
-            function get_($request, $game)
-            {
-                \DB::transaction(function() use ($request, $game)
-                {
                     try
                     {
                         $userId = \Auth::id();
@@ -831,9 +829,7 @@ namespace VanguardLTE\Games\Royal40FruitsNG
                             file_put_contents(storage_path('logs/') . 'GameInternal.log', $slg . $strLog);
                         }
                     }
-                }, 5);
-            }
-            get_($request, $game);
+
         }
     }
 

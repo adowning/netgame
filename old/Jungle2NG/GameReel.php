@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\Jungle2NG
+namespace App\Games\Jungle2NG
 {
     class GameReel
     {

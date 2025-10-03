@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\SpaceRocksNG
+namespace App\Games\SpaceRocksNG
 {
     class SlotSettings
     {

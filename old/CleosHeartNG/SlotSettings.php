@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\CleosHeartNG
+namespace App\Games\CleosHeartNG
 {
     class SlotSettings
     {

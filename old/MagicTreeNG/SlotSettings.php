@@ -1,5 +1,5 @@
 <?php 
-namespace VanguardLTE\Games\MagicTreeNG
+namespace App\Games\MagicTreeNG
 {
     class SlotSettings
     {
