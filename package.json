@@ -1,0 +1,79 @@
+{
+  "name": "netgame-server",
+  "version": "1.0.0",
+  "description": "Bun.sh HTTP server for casino slot game platform with PHP calculator integration",
+  "main": "src/server/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot src/server/index.ts",
+    "start": "bun src/server/index.ts",
+    "build": "bun build src/server/index.ts --outdir dist --target bun",
+    "test": "bun test",
+    "lint": "bunx eslint src/**/*.ts",
+    "type-check": "bunx tsc --noEmit",
+    "health-check": "curl -f http://localhost:3000/health || exit 1"
+  },
+  "keywords": [
+    "casino",
+    "slot-games",
+    "bun",
+    "typescript",
+    "php-integration",
+    "game-server"
+  ],
+  "author": "Game Platform Team",
+  "license": "UNLICENSED",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "dependencies": {
+    "mysql2": "^3.15.1",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.0.0",
+    "typescript": "^5.0.0"
+  },
+  "bun": {
+    "typescript": {
+      "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "strict": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "resolveJsonModule": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+          "@/*": ["src/*"],
+          "@/game-session/*": ["src/game-session/*"],
+          "@/server/*": ["src/server/*"]
+        }
+      },
+      "include": [
+        "src/**/*",
+        "*.ts"
+      ],
+      "exclude": [
+        "node_modules",
+        "dist",
+        "old",
+        "new"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/netgame-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/netgame-server/issues"
+  },
+  "homepage": "https://github.com/your-org/netgame-server#readme"
+}
