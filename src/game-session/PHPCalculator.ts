@@ -59,8 +59,8 @@ export class PHPCalculator {
       throw new Error('Invalid slotEvent: must be bet or freespin');
     }
 
-    if (!request.lines || request.lines < 1 || request.lines > 30) {
-      throw new Error('Invalid lines: must be between 1 and 30');
+    if (!request.lines || request.lines < 1 || request.lines > 100) { // Increased limit to 100
+      throw new Error('Invalid lines: must be between 1 and 100');
     }
 
     if (!request.betLine || request.betLine <= 0) {
@@ -111,7 +111,7 @@ export class PHPCalculator {
    * Execute PHP script using Bun spawn
    */
   private async executePHPScript(inputData: string): Promise<string> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const phpProcess = spawn(['php', this.phpScriptPath], {
         stdin: 'pipe',
         stdout: 'pipe',
@@ -119,31 +119,27 @@ export class PHPCalculator {
         cwd: process.cwd()
       });
 
-      let stdout = '';
-      let stderr = '';
-
-      // Set timeout
       const timeout = setTimeout(() => {
         phpProcess.kill();
         reject(new Error(`PHP execution timeout after ${this.timeoutMs}ms`));
       }, this.timeoutMs);
 
-      // Handle stdout
-      phpProcess.stdout.on('data', (data) => {
-        stdout += data.toString();
-      });
+      try {
+        // Write input data to stdin
+        phpProcess.stdin.write(inputData);
+        phpProcess.stdin.end();
 
-      // Handle stderr
-      phpProcess.stderr.on('data', (data) => {
-        stderr += data.toString();
-      });
+        // Read output and errors using Bun's stream APIs
+        const stdout = await new Response(phpProcess.stdout).text();
+        const stderr = await new Response(phpProcess.stderr).text();
 
-      // Handle process completion
-      phpProcess.on('close', (code) => {
+        // Wait for the process to exit and get the exit code
+        const exitCode = await phpProcess.exited;
+
         clearTimeout(timeout);
 
-        if (code !== 0) {
-          reject(new Error(`PHP process exited with code ${code}: ${stderr}`));
+        if (exitCode !== 0) {
+          reject(new Error(`PHP process exited with code ${exitCode}: ${stderr}`));
           return;
         }
 
@@ -153,17 +149,10 @@ export class PHPCalculator {
         }
 
         resolve(stdout);
-      });
-
-      // Handle process errors
-      phpProcess.on('error', (error) => {
-        clearTimeout(timeout);
-        reject(new Error(`Failed to start PHP process: ${error.message}`));
-      });
-
-      // Send input data
-      phpProcess.stdin.write(inputData);
-      phpProcess.stdin.end();
+      } catch (error) {
+          clearTimeout(timeout);
+          reject(error);
+      }
     });
   }
 
