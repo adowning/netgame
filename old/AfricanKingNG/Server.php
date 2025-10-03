@@ -15,33 +15,33 @@ class Server
     {
         try {
             // The TypeScript server will send all necessary data in the request body.
-            $postData = json_decode(trim(file_get_contents('php://input')));
+            $postData = json_decode(trim(file_get_contents('php://input')), true);
 
-            if (!$postData || !isset($postData->gameData) || !isset($postData->action)) {
+            if (!$postData || !isset($postData['gameData']) || !isset($postData['action'])) {
                 $this->sendError('Invalid input data');
             }
 
             // The only action supported by this engine is 'calculateSpin'.
-            if ($postData->action !== 'calculateSpin') {
+            if ($postData['action'] !== 'calculateSpin') {
                 $this->sendError('Unknown action');
             }
 
             // The gameData object contains all the necessary state and configuration
             // provided by the TypeScript server.
-            $gameData = $postData->gameData;
+            $gameData = (object)$postData['gameData'];
 
             // Instantiate the pure calculation engine.
             $calculator = new GameCalculator($gameData);
 
             // Perform the spin calculation.
-            $result = $calculator->calculateSpin((array)$postData);
+            $result = $calculator->calculateSpin($postData);
 
             // The result is sent back to the TypeScript server for processing.
             $this->sendResponse($result);
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // In case of any error, send a structured error response.
-            $this->sendError($e->getMessage());
+            $this->sendError('Calculation error: ' . $e->getMessage());
         }
     }
 

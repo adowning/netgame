@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Games\AfricanKingNG;
+namespace App\Games\BananasNG;
 
 class GameCalculator
 {
@@ -11,8 +11,20 @@ class GameCalculator
 
     // Properties from gameData
     public $shopPercent;
-    public
-    function __construct($gameData)
+    public $game_stat_in;
+    public $game_stat_out;
+    public $bank;
+    public $slotBonus;
+    public $isBonusStart = false;
+    public $MaxWin;
+    public $increaseRTP;
+    public $slotWildMpl;
+    public $slotFreeCount;
+    public $slotFreeMpl;
+    public $AllBet;
+    public $CurrentDenom;
+
+    public function __construct($gameData)
     {
         if (!$gameData || !isset($gameData->user) || !isset($gameData->game) || !isset($gameData->shop)) {
             throw new \InvalidArgumentException('Invalid game data provided');
@@ -29,21 +41,25 @@ class GameCalculator
         $this->slotBonus = $gameData->game->slotBonus ?? true;
         $this->MaxWin = $gameData->shop->max_win ?? 1000000;
         $this->increaseRTP = $gameData->game->increaseRTP ?? 1;
-        $this->slotWildMpl = $gameData->game->slotWildMpl ?? 1;
+        $this->slotWildMpl = $gameData->game->slotWildMpl ?? 2;
+        $this->slotFreeCount = $gameData->game->slotFreeCount ?? 45;
         $this->slotFreeMpl = $gameData->game->slotFreeMpl ?? 1;
         $this->CurrentDenom = $gameData->game->denomination;
 
-        // Initialize static configuration
-        $this->Paytable['SYM_0'] = [0, 0, 15, 100, 1000, 3000];
-        $this->Paytable['SYM_1'] = [0, 0, 0, 0, 0, 0]; // Wild has no direct payout
-        $this->Paytable['SYM_2'] = [0, 0, 5, 50, 100, 1000];
-        $this->Paytable['SYM_3'] = [0, 0, 0, 20, 50, 500];
-        $this->Paytable['SYM_4'] = [0, 0, 0, 10, 30, 400];
-        $this->Paytable['SYM_5'] = [0, 0, 0, 10, 30, 400];
-        $this->Paytable['SYM_6'] = [0, 0, 0, 5, 25, 200];
-        $this->Paytable['SYM_7'] = [0, 0, 0, 5, 20, 100];
-        $this->Paytable['SYM_8'] = [0, 0, 0, 5, 20, 100];
-        $this->Paytable['SYM_9'] = [0, 0, 40, 100, 400, 2500]; // Scatter
+        // Initialize static configuration for BananasNG
+        $this->Paytable['SYM_0'] = [0, 0, 2, 30, 120, 800];
+        $this->Paytable['SYM_1'] = [0, 0, 2, 30, 120, 800];
+        $this->Paytable['SYM_2'] = [0, 0, 0, 20, 100, 400];
+        $this->Paytable['SYM_3'] = [0, 0, 0, 20, 70, 250];
+        $this->Paytable['SYM_4'] = [0, 0, 0, 20, 70, 250];
+        $this->Paytable['SYM_5'] = [0, 0, 0, 10, 50, 120];
+        $this->Paytable['SYM_6'] = [0, 0, 0, 10, 50, 120];
+        $this->Paytable['SYM_7'] = [0, 0, 0, 4, 30, 100];
+        $this->Paytable['SYM_8'] = [0, 0, 0, 4, 30, 100];
+        $this->Paytable['SYM_9'] = [0, 0, 0, 4, 30, 100];
+        $this->Paytable['SYM_10'] = [0, 0, 2, 4, 30, 100];
+        $this->Paytable['SYM_11'] = [0, 2, 4, 20, 500, 0]; // Scatter
+        $this->Paytable['SYM_12'] = [0, 10, 250, 2500, 9000, 0]; // Wild
 
         // Load reel strips from file
         $this->reelsStrip = ['reelStrip1' => [], 'reelStrip2' => [], 'reelStrip3' => [], 'reelStrip4' => [], 'reelStrip5' => []];
@@ -85,39 +101,37 @@ class GameCalculator
         for ($i = 0; $i <= 2000; $i++) {
             $totalWin = 0;
             $lineWins = [];
-            $wild = ['0', '1'];
-            $scatter = '9';
+            $wild = '12';
+            $scatter = '11';
             $reels = $this->GetReelStrips($winType, $slotEvent);
-
-            if ($slotEvent == 'freespin') {
-                $rreel = rand(1, 5);
-                $reels['reel' . $rreel][0] = '1';
-                $reels['reel' . $rreel][1] = '1';
-                $reels['reel' . $rreel][2] = '1';
-            }
 
             for ($k = 0; $k < $lines; $k++) {
                 $line = $gameData->linesId[$k];
                 $lineSymbols = [];
                 for($r=0; $r<5; $r++) $lineSymbols[$r] = $reels['reel'.($r+1)][$line[$r] - 1];
 
-                $baseSymbol = null;
-                foreach($lineSymbols as $s) if(!in_array($s, $wild)) {$baseSymbol = $s; break;}
-                if($baseSymbol === null) $baseSymbol = '1'; // All wilds on line
+                $SymbolGame = ['0','1','2','3','4','5','6','7','8','9','10','12'];
+                foreach ($SymbolGame as $csym) {
+                    if ($csym == $scatter) continue;
 
-                if(isset($this->Paytable['SYM_' . $baseSymbol])) {
                     $winCount = 0;
+                    $wildCount = 0;
                     foreach($lineSymbols as $s) {
-                        if($s == $baseSymbol || in_array($s, $wild)) $winCount++;
+                        if($s == $csym || $s == $wild) {
+                            $winCount++;
+                            if($s == $wild) $wildCount++;
+                        }
                         else break;
                     }
 
                     if ($winCount > 0) {
-                        $pay = $this->Paytable['SYM_' . $baseSymbol][$winCount] ?? 0;
+                        $pay = $this->Paytable['SYM_' . $csym][$winCount] ?? 0;
                         if ($pay > 0) {
-                            $winAmount = $pay * $betLine * $bonusMpl;
+                            $winMpl = ($wildCount > 0 && $wildCount < $winCount) ? $this->slotWildMpl : 1;
+                            $winAmount = $pay * $betLine * $winMpl * $bonusMpl;
+
                             $wonSymbols = [];
-                             for($r=0; $r<$winCount; $r++) $wonSymbols[] = '["'.$r.'","'.($line[$r]-1).'"]';
+                            for($r=0; $r<$winCount; $r++) $wonSymbols[] = '["'.$r.'","'.($line[$r]-1).'"]';
                             $lineWins[] = '{"type":"LineWinAmount","selectedLine":"' . $k . '","amount":"' . $winAmount . '","wonSymbols":['.implode(',', $wonSymbols).']}';
                             $totalWin += $winAmount;
                         }
@@ -137,15 +151,13 @@ class GameCalculator
                 }
             }
             $scattersWin = ($this->Paytable['SYM_' . $scatter][$scattersCount] ?? 0) * $this->AllBet;
-            if ($scattersCount >= 3 && $this->slotBonus) {
-                 $scw = '{"type":"Bonus","bonusName":"PickBonus","params":{"fields":"25","freeSpins":"8"},"amount":"' . $scattersWin . '","wonSymbols":[' . implode(',', $scattersPos) . ']}';
+            if ($scattersCount >= 3) {
+                 $scw = '{"type":"Bonus","bonusName":"FreeSpins","params":{"freeSpins":"' . $this->slotFreeCount . '"},"amount":"' . $scattersWin . '","wonSymbols":[' . implode(',', $scattersPos) . ']}';
                  $lineWins[] = $scw;
             }
             $totalWin += $scattersWin;
 
             if ($this->MaxWin < ($totalWin * $this->CurrentDenom)) continue;
-            if ($scattersCount >= 2 && $winType != 'bonus') continue;
-
             if ($totalWin <= $spinWinLimit) break;
             if ($i > 1500) break;
         }
@@ -198,7 +210,7 @@ class GameCalculator
 
     public function GetReelStrips($winType, $slotEvent)
     {
-        $reelSource = ($slotEvent == 'freespin') ? $this->reelsStripBonus : $this->reelsStrip;
+        $reelSource = ($slotEvent == 'freespin' && !empty($this->reelsStripBonus['reelStrip1'])) ? $this->reelsStripBonus : $this->reelsStrip;
         $reels = ['rp' => []];
         $prs = [];
 
