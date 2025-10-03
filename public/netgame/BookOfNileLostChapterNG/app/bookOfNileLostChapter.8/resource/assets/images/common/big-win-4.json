@@ -1,0 +1,39 @@
+{"frames": {
+
+"All_Glow.png":
+{
+	"frame": {"x":1,"y":1280,"w":625,"h":491},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":55,"w":625,"h":491},
+	"sourceSize": {"w":625,"h":625}
+},
+"Groupe of clouds_03.png":
+{
+	"frame": {"x":494,"y":1280,"w":571,"h":436},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":571,"h":436},
+	"sourceSize": {"w":571,"h":436}
+},
+"Pyramid.png":
+{
+	"frame": {"x":1,"y":1,"w":1277,"h":609},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1277,"h":609},
+	"sourceSize": {"w":1277,"h":609}
+}},
+"animations": {
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "big-win-4.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":2048},
+	"scale": "1",
+	"related_multi_packs": [ "big-win-0.json", "big-win-1.json", "big-win-2.json", "big-win-3.json" ],
+	"smartupdate": "$TexturePacker:SmartUpdate:cc7036a341317d3094e77791fd3c3c6c:36730ff9026c98e83732c365136be2ca:ae5a0ca020cf32c5d1e8a1f57c94086b$"
+}
+}

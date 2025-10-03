@@ -1,0 +1,290 @@
+{
+  "resources": [
+    "../../assets/sounds/desktop/gameaudio.ogg",
+    "../../assets/sounds/desktop/gameaudio.m4a",
+    "../../assets/sounds/desktop/gameaudio.mp3",
+    "../../assets/sounds/desktop/gameaudio.ac3"
+  ],
+  "spritemap": {
+    "ambience": {
+      "start": 0,
+      "end": 28.97995464852608,
+      "loop": false
+    },
+    "basic_background": {
+      "start": 30,
+      "end": 77.97242630385487,
+      "loop": false
+    },
+    "bell": {
+      "start": 79,
+      "end": 80.58766439909297,
+      "loop": false
+    },
+    "big_win_end": {
+      "start": 82,
+      "end": 88.00816326530612,
+      "loop": false
+    },
+    "big_win_intro": {
+      "start": 90,
+      "end": 94.46548752834467,
+      "loop": false
+    },
+    "big_win_start": {
+      "start": 96,
+      "end": 98.60208616780045,
+      "loop": false
+    },
+    "big_win": {
+      "start": 100,
+      "end": 140.82068027210886,
+      "loop": false
+    },
+    "book_fly_0": {
+      "start": 142,
+      "end": 143.6907029478458,
+      "loop": false
+    },
+    "book_fly_1": {
+      "start": 145,
+      "end": 146.6907029478458,
+      "loop": false
+    },
+    "book_fly_2": {
+      "start": 148,
+      "end": 149.6907029478458,
+      "loop": false
+    },
+    "button": {
+      "start": 151,
+      "end": 151.23655328798185,
+      "loop": false
+    },
+    "counter_stop": {
+      "start": 153,
+      "end": 153.5732426303855,
+      "loop": false
+    },
+    "counter": {
+      "start": 155,
+      "end": 158.001179138322,
+      "loop": false
+    },
+    "flag_color": {
+      "start": 160,
+      "end": 161.82131519274375,
+      "loop": false
+    },
+    "free_spin_counter_scale_up": {
+      "start": 163,
+      "end": 163.84897959183672,
+      "loop": false
+    },
+    "freespin_background": {
+      "start": 165,
+      "end": 231.17687074829934,
+      "loop": false
+    },
+    "freespin_chance_end": {
+      "start": 233,
+      "end": 235.79945578231292,
+      "loop": false
+    },
+    "freespin_chance_loop": {
+      "start": 237,
+      "end": 239.46131519274377,
+      "loop": false
+    },
+    "freespin_chance_slow": {
+      "start": 241,
+      "end": 243.50775510204082,
+      "loop": false
+    },
+    "freespin_chance_start": {
+      "start": 245,
+      "end": 247.37278911564627,
+      "loop": false
+    },
+    "freespin_chance": {
+      "start": 249,
+      "end": 254.39718820861677,
+      "loop": false
+    },
+    "freespin_change": {
+      "start": 256,
+      "end": 258.31473922902495,
+      "loop": false
+    },
+    "freespin_compas_blow": {
+      "start": 260,
+      "end": 262.0128798185941,
+      "loop": false
+    },
+    "freespin_compas": {
+      "start": 264,
+      "end": 267.3277097505669,
+      "loop": false
+    },
+    "freespin_popup_close": {
+      "start": 269,
+      "end": 270.2712925170068,
+      "loop": false
+    },
+    "freespin_popup_win": {
+      "start": 272,
+      "end": 277.6322902494331,
+      "loop": false
+    },
+    "freespin_popup": {
+      "start": 279,
+      "end": 281.892335600907,
+      "loop": false
+    },
+    "freespin_start": {
+      "start": 283,
+      "end": 292.4897052154195,
+      "loop": false
+    },
+    "hover_0": {
+      "start": 294,
+      "end": 294.0928798185941,
+      "loop": false
+    },
+    "hover_1": {
+      "start": 296,
+      "end": 296.0928798185941,
+      "loop": false
+    },
+    "hover_2": {
+      "start": 298,
+      "end": 298.0928798185941,
+      "loop": false
+    },
+    "intrigue_0": {
+      "start": 300,
+      "end": 302.97215419501134,
+      "loop": false
+    },
+    "intrigue_1": {
+      "start": 304,
+      "end": 306.97215419501134,
+      "loop": false
+    },
+    "intrigue_2": {
+      "start": 308,
+      "end": 310.97215419501134,
+      "loop": false
+    },
+    "lines": {
+      "start": 312,
+      "end": 316.0126984126984,
+      "loop": false
+    },
+    "one_more_free_spin": {
+      "start": 318,
+      "end": 320.5208163265306,
+      "loop": false
+    },
+    "popup_bonus_buy": {
+      "start": 322,
+      "end": 324.3379591836735,
+      "loop": false
+    },
+    "reel_spin": {
+      "start": 326,
+      "end": 327.4396371882086,
+      "loop": false
+    },
+    "reel_stop_0": {
+      "start": 329,
+      "end": 329.2017233560091,
+      "loop": false
+    },
+    "reel_stop_1": {
+      "start": 331,
+      "end": 331.2017233560091,
+      "loop": false
+    },
+    "reel_stop_2": {
+      "start": 333,
+      "end": 333.2017233560091,
+      "loop": false
+    },
+    "reel_stop_3": {
+      "start": 335,
+      "end": 335.2017233560091,
+      "loop": false
+    },
+    "reel_stop_4": {
+      "start": 337,
+      "end": 337.2017233560091,
+      "loop": false
+    },
+    "scatter_0": {
+      "start": 339,
+      "end": 340.96643990929704,
+      "loop": false
+    },
+    "scatter_1": {
+      "start": 342,
+      "end": 343.76907029478457,
+      "loop": false
+    },
+    "scatter_2": {
+      "start": 345,
+      "end": 346.54848072562356,
+      "loop": false
+    },
+    "scatter_3": {
+      "start": 348,
+      "end": 349.3975510204082,
+      "loop": false
+    },
+    "scatter_4": {
+      "start": 351,
+      "end": 352.21179138322,
+      "loop": false
+    },
+    "scatter_freespin_0": {
+      "start": 354,
+      "end": 354.8576870748299,
+      "loop": false
+    },
+    "scatter_freespin_1": {
+      "start": 356,
+      "end": 356.8576870748299,
+      "loop": false
+    },
+    "scatter_freespin_2": {
+      "start": 358,
+      "end": 358.8576870748299,
+      "loop": false
+    },
+    "spin_stop": {
+      "start": 360,
+      "end": 360.37297052154196,
+      "loop": false
+    },
+    "spin": {
+      "start": 362,
+      "end": 362.1001360544218,
+      "loop": false
+    },
+    "win_0": {
+      "start": 364,
+      "end": 366.8081632653061,
+      "loop": false
+    },
+    "win_1": {
+      "start": 368,
+      "end": 372.61931972789114,
+      "loop": false
+    },
+    "win_2": {
+      "start": 374,
+      "end": 379.3884807256236,
+      "loop": false
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<font>
+	<info face="jp-ticker-font" size="38" />
+	<common lineHeight="38" scaleW="105" scaleH="101" pages="1" />
+	<pages>
+		<page id="0" file="jp-ticker-font.png" />
+	</pages>
+	<chars count="14">
+		<char id="49" x="55" y="34" width="13" height="32" xoffset="0" yoffset="5" xadvance="14" /><!-- 1 -->
+		<char id="50" x="29" y="0" width="25" height="32" xoffset="0" yoffset="5" xadvance="27" /><!-- 2 -->
+		<char id="51" x="54" y="67" width="25" height="33" xoffset="0" yoffset="5" xadvance="27" /><!-- 3 -->
+		<char id="52" x="0" y="0" width="28" height="32" xoffset="0" yoffset="5" xadvance="27" /><!-- 4 -->
+		<char id="53" x="80" y="0" width="24" height="33" xoffset="0" yoffset="5" xadvance="27" /><!-- 5 -->
+		<char id="54" x="28" y="33" width="26" height="33" xoffset="0" yoffset="5" xadvance="27" /><!-- 6 -->
+		<char id="55" x="0" y="67" width="26" height="33" xoffset="0" yoffset="5" xadvance="27" /><!-- 7 -->
+		<char id="56" x="55" y="0" width="24" height="33" xoffset="0" yoffset="5" xadvance="27" /><!-- 8 -->
+		<char id="57" x="27" y="67" width="26" height="33" xoffset="0" yoffset="5" xadvance="27" /><!-- 9 -->
+		<char id="48" x="0" y="33" width="27" height="33" xoffset="0" yoffset="5" xadvance="27" /><!-- 0 -->
+		<char id="46" x="69" y="50" width="10" height="11" xoffset="0" yoffset="27" xadvance="12" /><!-- . -->
+		<char id="44" x="69" y="34" width="13" height="15" xoffset="0" yoffset="28" xadvance="12" /><!-- , -->
+		<char id="32" x="0" y="0" width="0" height="0" xoffset="0" yoffset="0" xadvance="20" /><!--   -->
+		<char id="9" x="0" y="0" width="0" height="0" xoffset="0" yoffset="0" xadvance="160" /><!-- 	 -->
+	</chars>
+	<kernings count="0">
+	</kernings>
+</font>

@@ -1,0 +1,36 @@
+{"frames": {
+
+"buyBonusDisabledVertical.png":
+{
+	"frame": {"x":1,"y":1,"w":358,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":3,"w":358,"h":89},
+	"sourceSize": {"w":366,"h":92}
+},
+"buyBonusGoldVertical.png":
+{
+	"frame": {"x":1,"y":183,"w":366,"h":137},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":7,"w":366,"h":137},
+	"sourceSize": {"w":366,"h":150}
+},
+"buyBonusVertical.png":
+{
+	"frame": {"x":1,"y":92,"w":358,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":3,"w":358,"h":89},
+	"sourceSize": {"w":366,"h":92}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "buyBonusVertical_hd.png",
+	"format": "RGBA8888",
+	"size": {"w":368,"h":321},
+	"scale": "0.75",
+	"smartupdate": "$TexturePacker:SmartUpdate:fd7974b1427e5129f76097b104ed6fb3:11e918b59a0ee721c330d7e3cf0366a1:120dcfbaaa051ab28623ef8b20355493$"
+}
+}

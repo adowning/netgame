@@ -1,25 +1,32 @@
-import { GameService } from './services/GameService';
-import { SessionMiddleware } from './middleware/session';
-import { createGameRoutes } from './routes/game';
-import { config } from './config';
+import { GameService } from "./services/GameService";
+import { SessionMiddleware } from "./middleware/session";
+import { createGameRoutes } from "./routes/game";
+import { WebSocketServer } from "./websocket";
+import { BalanceManager } from "../game-session/BalanceManager";
+import { GameSessionManager } from "../game-session/GameSessionManager";
+import { PHPCalculator } from "../game-session/PHPCalculator";
+import { config } from "./config";
 
 // Initialize core services
-const gameService = new GameService();
-const sessionMiddleware = SessionMiddleware.create();
+const sessionManager = new GameSessionManager(new PHPCalculator("", 30000));
+const gameService = new GameService({ sessionManager });
+const sessionMiddleware = SessionMiddleware.create({ sessionManager });
+// WebSocket server not used in current testing
+// const wsServer = new WebSocketServer(gameService);
 
 // Create route handlers
 const gameRoutes = createGameRoutes({
   gameService,
-  sessionMiddleware
+  sessionMiddleware,
 });
 
 // Request logging middleware
 async function requestLogger(request: Request): Promise<void> {
-  if (config.get('logging').enableRequestLogging) {
+  if (config.get("logging").enableRequestLogging) {
     const timestamp = new Date().toISOString();
     const method = request.method;
     const url = request.url;
-    const userAgent = request.headers.get('User-Agent') || 'Unknown';
+    const userAgent = request.headers.get("User-Agent") || "Unknown";
 
     console.log(`[${timestamp}] ${method} ${url} - ${userAgent}`);
   }
@@ -27,17 +34,20 @@ async function requestLogger(request: Request): Promise<void> {
 
 // CORS headers
 function corsHeaders(origin: string | null): Record<string, string> {
-  const corsConfig = config.get('cors');
+  const corsConfig = config.get("cors");
   const allowedOrigin = Array.isArray(corsConfig.origin)
-    ? corsConfig.origin.includes(origin || '') ? origin : corsConfig.origin[0]
+    ? corsConfig.origin.includes(origin || "")
+      ? origin
+      : corsConfig.origin[0]
     : corsConfig.origin;
 
   return {
-    'Access-Control-Allow-Origin': allowedOrigin || '*',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-User-ID, X-Session-ID',
-    'Access-Control-Allow-Credentials': corsConfig.credentials.toString(),
-    'Access-Control-Max-Age': '86400' // 24 hours
+    "Access-Control-Allow-Origin": allowedOrigin || "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers":
+      "Content-Type, Authorization, X-User-ID, X-Session-ID",
+    "Access-Control-Allow-Credentials": corsConfig.credentials.toString(),
+    "Access-Control-Max-Age": "86400", // 24 hours
   };
 }
 
@@ -52,15 +62,15 @@ function createErrorResponse(
     error,
     message,
     timestamp: new Date().toISOString(),
-    ...(config.isDevelopment() && details && { details })
+    ...(config.isDevelopment() && details && { details }),
   };
 
   return new Response(JSON.stringify(errorBody), {
     status,
     headers: {
-      'Content-Type': 'application/json',
-      ...corsHeaders(null)
-    }
+      "Content-Type": "application/json",
+      ...corsHeaders(null),
+    },
   });
 }
 
@@ -75,29 +85,93 @@ async function handleRequest(request: Request): Promise<Response> {
     const url = new URL(request.url);
     const method = request.method;
     const path = url.pathname;
-    const origin = request.headers.get('Origin');
+    const origin = request.headers.get("Origin");
 
     // Handle CORS preflight
-    if (method === 'OPTIONS') {
+    if (method === "OPTIONS") {
       return new Response(null, {
         status: 204,
-        headers: corsHeaders(origin)
+        headers: corsHeaders(origin),
       });
     }
 
     // Add CORS headers to all responses
     const cors = corsHeaders(origin);
 
+    // Static file serving for public directory
+    if (method === "GET") {
+      const publicPath = path.startsWith("/public/") ? path.slice(8) : null;
+      if (publicPath) {
+        try {
+          const filePath = `./public/${publicPath}`;
+          const file = Bun.file(filePath);
+          const exists = await file.exists();
+          if (exists) {
+            const headers = new Headers(cors);
+            // Set appropriate content type based on file extension
+            const ext = publicPath.split(".").pop()?.toLowerCase();
+            switch (ext) {
+              case "html":
+                headers.set("Content-Type", "text/html");
+                break;
+              case "css":
+                headers.set("Content-Type", "text/css");
+                break;
+              case "js":
+                headers.set("Content-Type", "application/javascript");
+                break;
+              case "json":
+                headers.set("Content-Type", "application/json");
+                break;
+              default:
+                headers.set("Content-Type", "text/plain");
+            }
+            return new Response(file, { headers });
+          }
+        } catch (error) {
+          // Continue to API routes if static file serving fails
+        }
+      }
+    }
+
+    // Game data endpoint
+    if (path === "/api/games" && method === "GET") {
+      try {
+        let developer = request.headers.get("developer");
+        if (!developer) developer = "netent";
+        // const gameData = await Bun.file(
+        //   `./games/${developer}/${developer}-data.json`
+        // ).json();
+        const gameData = await Bun.file(`./ws.md`);
+        const response = JSON.stringify(gameData);
+        return new Response(response, {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders(origin),
+          },
+        });
+      } catch (error) {
+        return createErrorResponse(
+          500,
+          "FILE_READ_ERROR",
+          "Failed to load game data"
+        );
+      }
+    }
+
     // Health check endpoint
-    if (path === '/health' && method === 'GET') {
+    if (path === "/health" && method === "GET") {
       const response = await gameRoutes.health(request);
       // Add CORS headers
       const newHeaders = new Headers(response.headers);
-      Object.entries(cors).forEach(([key, value]) => newHeaders.set(key, value));
+      Object.entries(cors).forEach(([key, value]) =>
+        newHeaders.set(key, value)
+      );
 
       return new Response(response.body, {
         status: response.status,
-        headers: newHeaders
+        headers: newHeaders,
       });
     }
 
@@ -107,46 +181,54 @@ async function handleRequest(request: Request): Promise<Response> {
       const [, gameName, action] = gameRouteMatch;
 
       switch (action) {
-        case 'spin':
-          if (method === 'POST') {
+        case "spin":
+          if (method === "POST") {
             const response = await gameRoutes.spin(request, gameName);
             const newHeaders = new Headers(response.headers);
-            Object.entries(cors).forEach(([key, value]) => newHeaders.set(key, value));
+            Object.entries(cors).forEach(([key, value]) =>
+              newHeaders.set(key, value)
+            );
             return new Response(response.body, {
               status: response.status,
-              headers: newHeaders
+              headers: newHeaders,
             });
           }
           break;
 
-        case 'session':
-          if (method === 'GET') {
+        case "session":
+          if (method === "GET") {
             const response = await gameRoutes.getSession(request, gameName);
             const newHeaders = new Headers(response.headers);
-            Object.entries(cors).forEach(([key, value]) => newHeaders.set(key, value));
+            Object.entries(cors).forEach(([key, value]) =>
+              newHeaders.set(key, value)
+            );
             return new Response(response.body, {
               status: response.status,
-              headers: newHeaders
+              headers: newHeaders,
             });
-          } else if (method === 'POST') {
+          } else if (method === "POST") {
             const response = await gameRoutes.createSession(request, gameName);
             const newHeaders = new Headers(response.headers);
-            Object.entries(cors).forEach(([key, value]) => newHeaders.set(key, value));
+            Object.entries(cors).forEach(([key, value]) =>
+              newHeaders.set(key, value)
+            );
             return new Response(response.body, {
               status: response.status,
-              headers: newHeaders
+              headers: newHeaders,
             });
           }
           break;
 
-        case 'balance':
-          if (method === 'GET') {
+        case "balance":
+          if (method === "GET") {
             const response = await gameRoutes.getBalance(request, gameName);
             const newHeaders = new Headers(response.headers);
-            Object.entries(cors).forEach(([key, value]) => newHeaders.set(key, value));
+            Object.entries(cors).forEach(([key, value]) =>
+              newHeaders.set(key, value)
+            );
             return new Response(response.body, {
               status: response.status,
-              headers: newHeaders
+              headers: newHeaders,
             });
           }
           break;
@@ -154,22 +236,25 @@ async function handleRequest(request: Request): Promise<Response> {
     }
 
     // 404 Not Found
-    return createErrorResponse(404, 'NOT_FOUND', `Route ${method} ${path} not found`);
-
+    return createErrorResponse(
+      404,
+      "NOT_FOUND",
+      `Route ${method} ${path} not found`
+    );
   } catch (error) {
     const executionTime = Date.now() - startTime;
 
-    console.error('Request handling error:', error);
+    console.error("Request handling error:", error);
 
     // Log performance for errors too
-    if (config.get('logging').enablePerformanceLogging) {
+    if (config.get("logging").enablePerformanceLogging) {
       console.log(`Request error performance: ${executionTime}ms`);
     }
 
     return createErrorResponse(
       500,
-      'INTERNAL_ERROR',
-      'Internal server error',
+      "INTERNAL_ERROR",
+      "Internal server error",
       config.isDevelopment() ? error : undefined
     );
   }
@@ -185,62 +270,94 @@ function gracefulShutdown(signal: string) {
     server.stop();
   }
 
+  // Note: WebSocket server doesn't have a stop method in this implementation
+  // It will be terminated when the process exits
+
   // Close session manager
-  sessionMiddleware.getSessionManager().shutdown()
+  sessionMiddleware
+    .getSessionManager()
+    .shutdown()
     .then(() => {
-      console.log('Session manager shut down successfully');
+      console.log("Session manager shut down successfully");
       process.exit(0);
     })
     .catch((error) => {
-      console.error('Error during session manager shutdown:', error);
+      console.error("Error during session manager shutdown:", error);
       process.exit(1);
     });
 }
 
 // Register shutdown handlers
-process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
 
 // Validate configuration before starting
 const configValidation = config.validateConfig();
 if (!configValidation.valid) {
-  console.error('Configuration validation failed:');
-  configValidation.errors.forEach(error => console.error(`  - ${error}`));
+  console.error("Configuration validation failed:");
+  configValidation.errors.forEach((error) => console.error(`  - ${error}`));
   process.exit(1);
 }
 
-// Start the server
+// Start the servers
 try {
+  // Start HTTP server
   server = Bun.serve({
-    port: config.get('port'),
-    hostname: config.get('host'),
+    port: config.get("port"),
+    hostname: config.get("host"),
     fetch: handleRequest,
 
     // Server events
     error(error) {
-      console.error('Server error:', error);
-    }
+      console.error("HTTP Server error:", error);
+    },
   });
 
-  console.log(`🚀 Game server started successfully!`);
-  console.log(`📍 Listening on http://${config.get('host')}:${config.get('port')}`);
-  console.log(`🌍 Environment: ${config.get('environment')}`);
-  console.log(`🔧 CORS Origins: ${Array.isArray(config.get('cors').origin)
-    ? config.get('cors').origin.join(', ')
-    : config.get('cors').origin}`);
-  console.log(`📊 Request Logging: ${config.get('logging').enableRequestLogging ? 'Enabled' : 'Disabled'}`);
-  console.log(`⚡ Performance Logging: ${config.get('logging').enablePerformanceLogging ? 'Enabled' : 'Disabled'}`);
+  // Start WebSocket server (commented out for now)
+  // wsServer.start(8080);
 
-  // Log available routes
-  console.log('\n📋 Available endpoints:');
-  console.log('  GET  /health');
-  console.log('  POST /game/:gameName/spin');
-  console.log('  GET  /game/:gameName/session');
-  console.log('  POST /game/:gameName/session');
-  console.log('  GET  /game/:gameName/balance');
+  console.log(`🚀 Game servers started successfully!`);
+  console.log(
+    `📍 HTTP server listening on http://${config.get("host")}:${config.get(
+      "port"
+    )}`
+  );
+  console.log(
+    `🔌 WebSocket server listening on ws://${config.get("host")}:8080`
+  );
+  console.log(`🌍 Environment: ${config.get("environment")}`);
+  console.log(
+    `🔧 CORS Origins: ${
+      Array.isArray(config.get("cors").origin)
+        ? config.get("cors").origin.join(", ")
+        : config.get("cors").origin
+    }`
+  );
+  console.log(
+    `📊 Request Logging: ${
+      config.get("logging").enableRequestLogging ? "Enabled" : "Disabled"
+    }`
+  );
+  console.log(
+    `⚡ Performance Logging: ${
+      config.get("logging").enablePerformanceLogging ? "Enabled" : "Disabled"
+    }`
+  );
 
+  // Log available endpoints
+  console.log("\n📋 Available endpoints:");
+  console.log("  GET  /health");
+  console.log("  POST /game/:gameName/spin");
+  console.log("  GET  /game/:gameName/session");
+  console.log("  POST /game/:gameName/session");
+  console.log("  GET  /game/:gameName/balance");
+  console.log("\n🔌 WebSocket message types:");
+  console.log("  authenticate - Authenticate user session");
+  console.log("  spin - Execute game spin");
+  console.log("  balance - Get balance update");
+  console.log("  ping - Connection heartbeat");
 } catch (error) {
-  console.error('Failed to start server:', error);
+  console.error("Failed to start server:", error);
   process.exit(1);
 }
 

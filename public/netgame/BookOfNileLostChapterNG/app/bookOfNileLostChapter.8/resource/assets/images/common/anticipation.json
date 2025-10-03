@@ -1,0 +1,255 @@
+{"frames": {
+
+"book_of_sands_spinification_00.png":
+{
+	"frame": {"x":517,"y":567,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_01.png":
+{
+	"frame": {"x":517,"y":1133,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_02.png":
+{
+	"frame": {"x":567,"y":1699,"w":169,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_03.png":
+{
+	"frame": {"x":1133,"y":173,"w":169,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_04.png":
+{
+	"frame": {"x":1133,"y":344,"w":169,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_05.png":
+{
+	"frame": {"x":1,"y":1,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_06.png":
+{
+	"frame": {"x":1,"y":567,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_07.png":
+{
+	"frame": {"x":1,"y":1133,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_08.png":
+{
+	"frame": {"x":1,"y":1699,"w":170,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_09.png":
+{
+	"frame": {"x":1,"y":1871,"w":170,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_10.png":
+{
+	"frame": {"x":567,"y":1,"w":170,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_11.png":
+{
+	"frame": {"x":173,"y":1,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_12.png":
+{
+	"frame": {"x":345,"y":1,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_13.png":
+{
+	"frame": {"x":1133,"y":1,"w":170,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_14.png":
+{
+	"frame": {"x":1699,"y":1,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_15.png":
+{
+	"frame": {"x":1871,"y":1,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_16.png":
+{
+	"frame": {"x":173,"y":567,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_17.png":
+{
+	"frame": {"x":173,"y":1133,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_18.png":
+{
+	"frame": {"x":1133,"y":515,"w":169,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_19.png":
+{
+	"frame": {"x":567,"y":1870,"w":169,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_20.png":
+{
+	"frame": {"x":345,"y":567,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_21.png":
+{
+	"frame": {"x":345,"y":1133,"w":170,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":5,"w":170,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_22.png":
+{
+	"frame": {"x":517,"y":173,"w":169,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_23.png":
+{
+	"frame": {"x":517,"y":344,"w":169,"h":564},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_24.png":
+{
+	"frame": {"x":1699,"y":567,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_25.png":
+{
+	"frame": {"x":688,"y":1133,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_26.png":
+{
+	"frame": {"x":859,"y":1133,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_27.png":
+{
+	"frame": {"x":1030,"y":1133,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_28.png":
+{
+	"frame": {"x":1870,"y":567,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+},
+"book_of_sands_spinification_29.png":
+{
+	"frame": {"x":688,"y":515,"w":169,"h":564},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":5,"w":169,"h":564},
+	"sourceSize": {"w":200,"h":572}
+}},
+"animations": {
+	"book_of_sands_spinification": ["book_of_sands_spinification_00.png","book_of_sands_spinification_01.png","book_of_sands_spinification_02.png","book_of_sands_spinification_03.png","book_of_sands_spinification_04.png","book_of_sands_spinification_05.png","book_of_sands_spinification_06.png","book_of_sands_spinification_07.png","book_of_sands_spinification_08.png","book_of_sands_spinification_09.png","book_of_sands_spinification_10.png","book_of_sands_spinification_11.png","book_of_sands_spinification_12.png","book_of_sands_spinification_13.png","book_of_sands_spinification_14.png","book_of_sands_spinification_15.png","book_of_sands_spinification_16.png","book_of_sands_spinification_17.png","book_of_sands_spinification_18.png","book_of_sands_spinification_19.png","book_of_sands_spinification_20.png","book_of_sands_spinification_21.png","book_of_sands_spinification_22.png","book_of_sands_spinification_23.png","book_of_sands_spinification_24.png","book_of_sands_spinification_25.png","book_of_sands_spinification_26.png","book_of_sands_spinification_27.png","book_of_sands_spinification_28.png","book_of_sands_spinification_29.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "anticipation.jpg",
+	"format": "RGB888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4e6a7d617037477926ebaa486f688e2b:173df0f3aff7419ddd8952d537f018ee:72b405908a3e24939a37ddf7f6d19847$"
+}
+}

@@ -1,0 +1,40 @@
+{
+  "resources": [
+    "../../assets/sounds/desktop/ngExtensionAudio.ogg",
+    "../../assets/sounds/desktop/ngExtensionAudio.m4a",
+    "../../assets/sounds/desktop/ngExtensionAudio.mp3",
+    "../../assets/sounds/desktop/ngExtensionAudio.ac3"
+  ],
+  "spritemap": {
+    "jackpot_online_background": {
+      "start": 0,
+      "end": 10.437369614512471,
+      "loop": false
+    },
+    "jackpot_online_coincidence_1": {
+      "start": 12,
+      "end": 13.25968253968254,
+      "loop": false
+    },
+    "jackpot_online_coincidence_2": {
+      "start": 15,
+      "end": 16.37578231292517,
+      "loop": false
+    },
+    "jackpot_online_coincidence_3": {
+      "start": 18,
+      "end": 19.875011337868482,
+      "loop": false
+    },
+    "jackpot_online_finish_jackpot_popup": {
+      "start": 21,
+      "end": 23.269750566893425,
+      "loop": false
+    },
+    "jackpot_online_won_jackpot_movie": {
+      "start": 25,
+      "end": 28.500408163265305,
+      "loop": false
+    }
+  }
+}

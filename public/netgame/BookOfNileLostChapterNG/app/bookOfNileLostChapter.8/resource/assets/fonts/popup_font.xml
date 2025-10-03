@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<font>
+  <info face="popup_font" size="132" bold="0" italic="0" chasrset="" unicode="0" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1"/>
+  <common lineHeight="150" base="120" scaleW="90" scaleH="1269" pages="1" packed="0"/>
+  <pages>
+    <page id="0" file="popup_font.png"/>
+  </pages>
+  <chars count="13">
+    <char id="48" x="0" y="0" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="0"/>
+    <char id="49" x="210" y="0" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="1"/>
+    <char id="50" x="420" y="0" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="2"/>
+    <char id="51" x="630" y="0" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="3"/>
+    <char id="52" x="840" y="0" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="4"/>
+    <char id="53" x="0" y="285" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="5"/>
+    <char id="54" x="210" y="285" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="6"/>
+    <char id="55" x="420" y="285" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="7"/>
+    <char id="56" x="630" y="285" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="8"/>
+    <char id="57" x="840" y="285" width="210" height="285" xoffset="0" yoffset="0" xadvance="210" page="0" chnl="0" letter="9"/>
+    <char id="120" x="1182" y="285" width="138" height="285" xoffset="0" yoffset="0" xadvance="138" page="0" chnl="0" letter="x"/>
+    <char id="44" x="1116" y="285" width="66" height="309" xoffset="0" yoffset="0" xadvance="66" page="0" chnl="0" letter=","/>
+    <char id="46" x="1050" y="285" width="66" height="309" xoffset="0" yoffset="0" xadvance="66" page="0" chnl="0" letter="."/>
+  </chars>
+  <kernings count="1">
+    <kerning first="49" second="49" amount="0"/>
+  </kernings>
+</font>

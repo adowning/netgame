@@ -1,0 +1,64 @@
+{"frames": {
+
+"BG_light3.png":
+{
+	"frame": {"x":773,"y":1,"w":743,"h":250},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":0,"w":743,"h":250},
+	"sourceSize": {"w":754,"h":251}
+},
+"BG_light4.png":
+{
+	"frame": {"x":1,"y":746,"w":1103,"h":388},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":3,"w":1103,"h":388},
+	"sourceSize": {"w":1126,"h":403}
+},
+"Big_Win_letters.png":
+{
+	"frame": {"x":1,"y":1,"w":770,"h":201},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":770,"h":201},
+	"sourceSize": {"w":770,"h":201}
+},
+"Cloud_02.png":
+{
+	"frame": {"x":391,"y":518,"w":320,"h":132},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":320,"h":132},
+	"sourceSize": {"w":324,"h":134}
+},
+"Groupe of clouds_03.png":
+{
+	"frame": {"x":391,"y":204,"w":351,"h":312},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":351,"h":312},
+	"sourceSize": {"w":428,"h":327}
+},
+"numbers.png":
+{
+	"frame": {"x":1,"y":1851,"w":431,"h":124},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":431,"h":124},
+	"sourceSize": {"w":431,"h":124}
+}},
+"animations": {
+	"BG_light": ["BG_light3.png","BG_light4.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "big-win-2_hd.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":2048},
+	"scale": "0.75",
+	"related_multi_packs": [ "big-win-0_hd.json", "big-win-1_hd.json" ],
+	"smartupdate": "$TexturePacker:SmartUpdate:91c9f6eff028574f6892f6d7431109d4:36730ff9026c98e83732c365136be2ca:578c9bbb5592eaedfb6e41a321d242e3$"
+}
+}

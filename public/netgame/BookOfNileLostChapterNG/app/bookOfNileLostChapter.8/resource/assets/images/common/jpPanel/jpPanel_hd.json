@@ -1,0 +1,60 @@
+{"frames": {
+
+"jp-back-fade.png":
+{
+	"frame": {"x":1,"y":228,"w":18,"h":85},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":85},
+	"sourceSize": {"w":18,"h":85}
+},
+"jp-blue-diamond.png":
+{
+	"frame": {"x":44,"y":1,"w":45,"h":46},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":45,"h":46},
+	"sourceSize": {"w":45,"h":46}
+},
+"jp-orange-diamond.png":
+{
+	"frame": {"x":44,"y":48,"w":45,"h":46},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":45,"h":46},
+	"sourceSize": {"w":45,"h":46}
+},
+"jp-red-diamond.png":
+{
+	"frame": {"x":44,"y":95,"w":45,"h":46},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":45,"h":46},
+	"sourceSize": {"w":45,"h":46}
+},
+"jp-title.png":
+{
+	"frame": {"x":1,"y":1,"w":225,"h":41},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":225,"h":41},
+	"sourceSize": {"w":225,"h":41}
+},
+"jp-violet-diamond.png":
+{
+	"frame": {"x":44,"y":142,"w":45,"h":46},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":45,"h":46},
+	"sourceSize": {"w":45,"h":46}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "jpPanel_hd.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":256},
+	"scale": "0.75",
+	"smartupdate": "$TexturePacker:SmartUpdate:15ae916964598d09b13850531d32d4af:28c264caa933531ecf0f6b0c57776461:ba268e916a93439dd5497b33ab58ec86$"
+}
+}

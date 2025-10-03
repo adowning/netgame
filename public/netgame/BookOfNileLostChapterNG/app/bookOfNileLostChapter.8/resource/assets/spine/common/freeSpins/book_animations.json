@@ -1,0 +1,418 @@
+{
+  "skeleton": {
+    "hash": "0S0CgDdDZvWMwKw2si3Ae5OxtQY",
+    "spine": "3.8.95",
+    "x": -165.4,
+    "y": -157.38,
+    "width": 333,
+    "height": 319
+  },
+  "bones": [
+    {
+      "name": "root"
+    },
+    {
+      "name": "book",
+      "parent": "root"
+    },
+    {
+      "name": "book_etheral",
+      "parent": "root",
+      "y": 24.29
+    }
+  ],
+  "slots": [
+    {
+      "name": "book_glow_2",
+      "bone": "book",
+      "blend": "additive"
+    },
+    {
+      "name": "book_glow_1",
+      "bone": "book",
+      "blend": "additive"
+    },
+    {
+      "name": "book_of_sands_scatter",
+      "bone": "book"
+    },
+    {
+      "name": "book_light",
+      "bone": "book_etheral",
+      "attachment": "book_light"
+    }
+  ],
+  "skins": [
+    {
+      "name": "default",
+      "attachments": {
+        "book_glow_1": {
+          "book_glow_1": {
+            "width": 329,
+            "height": 311
+          }
+        },
+        "book_glow_2": {
+          "book_glow_2": {
+            "width": 463,
+            "height": 446
+          }
+        },
+        "book_light": {
+          "book_light": {
+            "x": 1.1,
+            "y": -22.17,
+            "width": 333,
+            "height": 319
+          }
+        },
+        "book_of_sands_scatter": {
+          "book_of_sands_scatter_lending_00": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_01": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_02": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_03": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_04": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_05": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_06": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_07": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_08": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_09": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_10": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_11": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_12": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_13": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_14": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_15": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_16": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_17": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_18": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_19": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_20": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_21": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_22": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_23": {
+            "width": 350,
+            "height": 350
+          },
+          "book_of_sands_scatter_lending_24": {
+            "width": 350,
+            "height": 350
+          }
+        }
+      }
+    }
+  ],
+  "events": {
+    "etheral_move": {}
+  },
+  "animations": {
+    "book": {
+      "slots": {
+        "book_glow_1": {
+          "color": [
+            {
+              "color": "ffffff00"
+            },
+            {
+              "time": 0.2667,
+              "color": "ffffffff",
+              "curve": "stepped"
+            },
+            {
+              "time": 0.6333,
+              "color": "ffffffff"
+            },
+            {
+              "time": 1,
+              "color": "ffffff00"
+            }
+          ],
+          "attachment": [
+            {
+              "name": "book_glow_1"
+            }
+          ]
+        },
+        "book_glow_2": {
+          "color": [
+            {
+              "color": "ffffff00"
+            },
+            {
+              "time": 0.4,
+              "color": "ffffffff",
+              "curve": "stepped"
+            },
+            {
+              "time": 0.8,
+              "color": "ffffffff"
+            },
+            {
+              "time": 1.4333,
+              "color": "ffffff00"
+            }
+          ],
+          "attachment": [
+            {
+              "name": "book_glow_2"
+            }
+          ]
+        },
+        "book_light": {
+          "color": [
+            {
+              "color": "ffffff00",
+              "curve": "stepped"
+            },
+            {
+              "time": 0.4,
+              "color": "ffffff00"
+            },
+            {
+              "time": 0.6333,
+              "color": "ffffffff"
+            },
+            {
+              "time": 0.8,
+              "color": "ffffff00"
+            }
+          ],
+          "attachment": [
+            {
+              "time": 0.4,
+              "name": "book_light"
+            }
+          ]
+        },
+        "book_of_sands_scatter": {
+          "attachment": [
+            {
+              "name": "book_of_sands_scatter_lending_00"
+            },
+            {
+              "time": 0.0333,
+              "name": "book_of_sands_scatter_lending_01"
+            },
+            {
+              "time": 0.0667,
+              "name": "book_of_sands_scatter_lending_02"
+            },
+            {
+              "time": 0.1,
+              "name": "book_of_sands_scatter_lending_03"
+            },
+            {
+              "time": 0.1333,
+              "name": "book_of_sands_scatter_lending_04"
+            },
+            {
+              "time": 0.1667,
+              "name": "book_of_sands_scatter_lending_05"
+            },
+            {
+              "time": 0.2,
+              "name": "book_of_sands_scatter_lending_06"
+            },
+            {
+              "time": 0.2333,
+              "name": "book_of_sands_scatter_lending_07"
+            },
+            {
+              "time": 0.2667,
+              "name": "book_of_sands_scatter_lending_08"
+            },
+            {
+              "time": 0.3,
+              "name": "book_of_sands_scatter_lending_09"
+            },
+            {
+              "time": 0.3333,
+              "name": "book_of_sands_scatter_lending_10"
+            },
+            {
+              "time": 0.3667,
+              "name": "book_of_sands_scatter_lending_11"
+            },
+            {
+              "time": 0.4,
+              "name": "book_of_sands_scatter_lending_12"
+            },
+            {
+              "time": 0.4333,
+              "name": "book_of_sands_scatter_lending_13"
+            },
+            {
+              "time": 0.4667,
+              "name": "book_of_sands_scatter_lending_14"
+            },
+            {
+              "time": 0.5,
+              "name": "book_of_sands_scatter_lending_15"
+            },
+            {
+              "time": 0.5333,
+              "name": "book_of_sands_scatter_lending_16"
+            },
+            {
+              "time": 0.5667,
+              "name": "book_of_sands_scatter_lending_17"
+            },
+            {
+              "time": 0.6,
+              "name": "book_of_sands_scatter_lending_18"
+            },
+            {
+              "time": 0.6333,
+              "name": "book_of_sands_scatter_lending_19"
+            },
+            {
+              "time": 0.6667,
+              "name": "book_of_sands_scatter_lending_20"
+            },
+            {
+              "time": 0.7,
+              "name": "book_of_sands_scatter_lending_21"
+            },
+            {
+              "time": 0.7333,
+              "name": "book_of_sands_scatter_lending_22"
+            },
+            {
+              "time": 0.7667,
+              "name": "book_of_sands_scatter_lending_23"
+            },
+            {
+              "time": 0.8,
+              "name": "book_of_sands_scatter_lending_24"
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "time": 0.7333,
+          "name": "etheral_move"
+        }
+      ]
+    },
+    "etheral_move": {
+      "slots": {
+        "book_light": {
+          "color": [
+            {
+              "color": "ffffffff",
+              "curve": "stepped"
+            },
+            {
+              "time": 0.8667,
+              "color": "ffffffff"
+            },
+            {
+              "time": 0.9667,
+              "color": "ffffff00"
+            }
+          ],
+          "attachment": [
+            {
+              "name": "book_light"
+            }
+          ]
+        }
+      },
+      "bones": {
+        "book_etheral": {
+          "rotate": [
+            {
+              "curve": 0.25,
+              "c3": 0.876,
+              "c4": 0.93
+            },
+            {
+              "time": 0.9667,
+              "angle": 35.15
+            }
+          ],
+          "scale": [
+            {
+              "time": 0.6
+            },
+            {
+              "time": 0.9,
+              "x": 0.6,
+              "y": 0.6
+            }
+          ]
+        }
+      }
+    }
+  }
+}

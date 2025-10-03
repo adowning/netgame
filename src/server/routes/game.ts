@@ -1,6 +1,8 @@
-import { GameService, SpinRequestData } from '../services/GameService';
-import { SessionMiddleware } from '../middleware/session';
-import { config } from '../config';
+/** biome-ignore-all lint/suspicious/noImplicitAnyLet: <> */
+// biome-ignore assist/source/organizeImports: <>
+import type { GameService, SpinRequestData } from "../services/GameService";
+import { SessionMiddleware } from "../middleware/session";
+import { config } from "../config";
 
 export interface GameRouteContext {
   gameService: GameService;
@@ -17,9 +19,11 @@ export function createGameRoutes(context: GameRouteContext) {
     async spin(request: Request, gameName: string): Promise<Response> {
       try {
         // Apply session middleware
-        const sessionResult = await sessionMiddleware.middleware({ requireSession: true })({
+        const sessionResult = await sessionMiddleware.middleware({
+          requireSession: true,
+        })({
           request,
-          gameId: gameName
+          gameId: gameName,
         });
 
         if (sessionResult instanceof Response) {
@@ -33,12 +37,12 @@ export function createGameRoutes(context: GameRouteContext) {
         if (!session) {
           return new Response(
             JSON.stringify({
-              error: 'SESSION_REQUIRED',
-              message: 'Valid game session required'
+              error: "SESSION_REQUIRED",
+              message: "Valid game session required",
             }),
             {
               status: 401,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
@@ -47,29 +51,33 @@ export function createGameRoutes(context: GameRouteContext) {
         let requestData: SpinRequestData;
         try {
           requestData = await request.json();
-        } catch (error) {
+        } catch (_error) {
           return new Response(
             JSON.stringify({
-              error: 'INVALID_JSON',
-              message: 'Request body must be valid JSON'
+              error: "INVALID_JSON",
+              message: "Request body must be valid JSON",
             }),
             {
               status: 400,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
 
         // Validate required fields
-        if (!requestData.lines || !requestData.betLine || !requestData.linesId) {
+        if (
+          !requestData.lines ||
+          !requestData.betLine ||
+          !requestData.linesId
+        ) {
           return new Response(
             JSON.stringify({
-              error: 'MISSING_PARAMETERS',
-              message: 'lines, betLine, and linesId are required'
+              error: "MISSING_PARAMETERS",
+              message: "lines, betLine, and linesId are required",
             }),
             {
               status: 400,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
@@ -83,41 +91,44 @@ export function createGameRoutes(context: GameRouteContext) {
         if (!result.success) {
           return new Response(
             JSON.stringify({
-              error: result.error?.code || 'SPIN_FAILED',
-              message: result.error?.message || 'Spin execution failed',
-              details: config.isDevelopment() ? result.error?.details : undefined
+              error: result.error?.code || "SPIN_FAILED",
+              message: result.error?.message || "Spin execution failed",
+              details: config.isDevelopment()
+                ? result.error?.details
+                : undefined,
             }),
             {
               status: 500,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
 
         // Log performance if enabled
-        if (config.get('logging').enablePerformanceLogging && result.performance) {
-          console.log(`Spin performance - Total: ${result.performance.executionTime}ms, PHP: ${result.performance.phpTime}ms`);
+        if (
+          config.get("logging").enablePerformanceLogging &&
+          result.performance
+        ) {
+          console.log(
+            `Spin performance - Total: ${result.performance.executionTime}ms, PHP: ${result.performance.phpTime}ms`
+          );
         }
 
-        return new Response(
-          JSON.stringify(result.data),
-          {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
-
+        return new Response(JSON.stringify(result.data), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
       } catch (error) {
-        console.error('Spin route error:', error);
+        console.error("Spin route error:", error);
 
         return new Response(
           JSON.stringify({
-            error: 'INTERNAL_ERROR',
-            message: 'Internal server error during spin execution'
+            error: "INTERNAL_ERROR",
+            message: "Internal server error during spin execution",
           }),
           {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { "Content-Type": "application/json" },
           }
         );
       }
@@ -129,9 +140,11 @@ export function createGameRoutes(context: GameRouteContext) {
     async getSession(request: Request, gameName: string): Promise<Response> {
       try {
         // Apply session middleware
-        const sessionResult = await sessionMiddleware.middleware({ requireSession: true })({
+        const sessionResult = await sessionMiddleware.middleware({
+          requireSession: true,
+        })({
           request,
-          gameId: gameName
+          gameId: gameName,
         });
 
         if (sessionResult instanceof Response) {
@@ -144,12 +157,12 @@ export function createGameRoutes(context: GameRouteContext) {
         if (!session) {
           return new Response(
             JSON.stringify({
-              error: 'SESSION_NOT_FOUND',
-              message: 'Session not found'
+              error: "SESSION_NOT_FOUND",
+              message: "Session not found",
             }),
             {
               status: 404,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
@@ -165,25 +178,24 @@ export function createGameRoutes(context: GameRouteContext) {
             state: sessionData.state,
             lastActivity: sessionData.lastActivity,
             createdAt: sessionData.createdAt,
-            isActive: session.isSessionActive()
+            isActive: session.isSessionActive(),
           }),
           {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { "Content-Type": "application/json" },
           }
         );
-
       } catch (error) {
-        console.error('Get session route error:', error);
+        console.error("Get session route error:", error);
 
         return new Response(
           JSON.stringify({
-            error: 'INTERNAL_ERROR',
-            message: 'Failed to retrieve session information'
+            error: "INTERNAL_ERROR",
+            message: "Failed to retrieve session information",
           }),
           {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { "Content-Type": "application/json" },
           }
         );
       }
@@ -195,9 +207,11 @@ export function createGameRoutes(context: GameRouteContext) {
     async getBalance(request: Request, gameName: string): Promise<Response> {
       try {
         // Apply session middleware
-        const sessionResult = await sessionMiddleware.middleware({ requireSession: true })({
+        const sessionResult = await sessionMiddleware.middleware({
+          requireSession: true,
+        })({
           request,
-          gameId: gameName
+          gameId: gameName,
         });
 
         if (sessionResult instanceof Response) {
@@ -210,12 +224,12 @@ export function createGameRoutes(context: GameRouteContext) {
         if (!session) {
           return new Response(
             JSON.stringify({
-              error: 'SESSION_NOT_FOUND',
-              message: 'Session not found'
+              error: "SESSION_NOT_FOUND",
+              message: "Session not found",
             }),
             {
               status: 404,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
@@ -226,35 +240,32 @@ export function createGameRoutes(context: GameRouteContext) {
         if (!balanceResult.success) {
           return new Response(
             JSON.stringify({
-              error: balanceResult.error?.code || 'BALANCE_ERROR',
-              message: balanceResult.error?.message || 'Failed to retrieve balance'
+              error: balanceResult.error?.code || "BALANCE_ERROR",
+              message:
+                balanceResult.error?.message || "Failed to retrieve balance",
             }),
             {
               status: 500,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
 
-        return new Response(
-          JSON.stringify(balanceResult.data),
-          {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
-
+        return new Response(JSON.stringify(balanceResult.data), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
       } catch (error) {
-        console.error('Get balance route error:', error);
+        console.error("Get balance route error:", error);
 
         return new Response(
           JSON.stringify({
-            error: 'INTERNAL_ERROR',
-            message: 'Failed to retrieve balance information'
+            error: "INTERNAL_ERROR",
+            message: "Failed to retrieve balance information",
           }),
           {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { "Content-Type": "application/json" },
           }
         );
       }
@@ -269,29 +280,29 @@ export function createGameRoutes(context: GameRouteContext) {
         let sessionData;
         try {
           sessionData = await request.json();
-        } catch (error) {
+        } catch (_error) {
           return new Response(
             JSON.stringify({
-              error: 'INVALID_JSON',
-              message: 'Request body must be valid JSON'
+              error: "INVALID_JSON",
+              message: "Request body must be valid JSON",
             }),
             {
               status: 400,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
 
         // Validate required fields
-        if (!sessionData.userId || !sessionData.gameData) {
+        if (!sessionData.userId || typeof sessionData.balance !== "number") {
           return new Response(
             JSON.stringify({
-              error: 'MISSING_PARAMETERS',
-              message: 'userId and gameData are required'
+              error: "MISSING_PARAMETERS",
+              message: "userId and balance are required",
             }),
             {
               status: 400,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
@@ -306,35 +317,31 @@ export function createGameRoutes(context: GameRouteContext) {
         if (!result.success) {
           return new Response(
             JSON.stringify({
-              error: result.error?.code || 'SESSION_CREATION_FAILED',
-              message: result.error?.message || 'Failed to create session'
+              error: result.error?.code || "SESSION_CREATION_FAILED",
+              message: result.error?.message || "Failed to create session",
             }),
             {
               status: 500,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { "Content-Type": "application/json" },
             }
           );
         }
 
-        return new Response(
-          JSON.stringify(result.data),
-          {
-            status: 201,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
-
+        return new Response(JSON.stringify(result.data), {
+          status: 201,
+          headers: { "Content-Type": "application/json" },
+        });
       } catch (error) {
-        console.error('Create session route error:', error);
+        console.error("Create session route error:", error);
 
         return new Response(
           JSON.stringify({
-            error: 'INTERNAL_ERROR',
-            message: 'Failed to create session'
+            error: "INTERNAL_ERROR",
+            message: "Failed to create session",
           }),
           {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { "Content-Type": "application/json" },
           }
         );
       }
@@ -343,28 +350,29 @@ export function createGameRoutes(context: GameRouteContext) {
     /**
      * GET /health - Service health check
      */
-    async health(request: Request): Promise<Response> {
+    async health(_request: Request): Promise<Response> {
       const health = gameService.getHealthStatus();
       const configValid = config.validateConfig();
 
-      const overallHealth = health.phpCalculator && health.balanceManager && configValid.valid;
+      const overallHealth =
+        health.phpCalculator && health.balanceManager && configValid.valid;
 
       return new Response(
         JSON.stringify({
-          status: overallHealth ? 'healthy' : 'unhealthy',
+          status: overallHealth ? "healthy" : "unhealthy",
           timestamp: new Date().toISOString(),
           services: {
             phpCalculator: health.phpCalculator,
             balanceManager: health.balanceManager,
-            config: configValid.valid
+            config: configValid.valid,
           },
-          config: configValid.valid ? undefined : configValid.errors
+          config: configValid.valid ? undefined : configValid.errors,
         }),
         {
           status: overallHealth ? 200 : 503,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { "Content-Type": "application/json" },
         }
       );
-    }
+    },
   };
 }

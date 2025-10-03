@@ -1,18 +1,21 @@
 import { GameSession, GameError } from '../../game-session/GameSession';
 import { PHPCalculator } from '../../game-session/PHPCalculator';
 import { BalanceManager } from '../../game-session/BalanceManager';
+import { GameSessionManager } from '../../game-session/GameSessionManager';
 import {
   SpinRequest,
   SpinResponse,
   SpinResult,
   GameData,
-  PHPProcessResult
+  PHPProcessResult,
+  RTPConfig
 } from '../../game-session/types';
 import { config } from '../config';
 
 export interface GameServiceOptions {
   phpCalculator?: PHPCalculator;
   balanceManager?: BalanceManager;
+  sessionManager?: GameSessionManager;
 }
 
 export interface SpinRequestData {
@@ -39,10 +42,12 @@ export interface GameServiceResponse {
 export class GameService {
   private phpCalculator: PHPCalculator;
   private balanceManager: BalanceManager;
+  private sessionManager: GameSessionManager;
 
   constructor(options: GameServiceOptions = {}) {
     this.phpCalculator = options.phpCalculator || new PHPCalculator('', config.get('php').timeoutMs);
     this.balanceManager = options.balanceManager || new BalanceManager();
+    this.sessionManager = options.sessionManager || new GameSessionManager(this.phpCalculator);
   }
 
   /**
@@ -158,14 +163,28 @@ export class GameService {
     gameData: GameData
   ): Promise<GameServiceResponse> {
     try {
-      // TODO: Implement session creation through GameSessionManager
-      // This would require access to the session manager instance
+      // Create default RTP config
+      const rtpConfig: RTPConfig = {
+        basePercent: gameData.shop.percent,
+        countBalanceThreshold: 0,
+        addressThreshold: 0,
+        adjustmentFactors: {
+          lowBalance: 1.0,
+          highBalance: 1.0,
+          bonusGames: 1.0
+        }
+      };
+
+      // Create session through session manager
+      const session = await this.sessionManager.createSession(userId, gameId, gameData, rtpConfig);
 
       return {
-        success: false,
-        error: {
-          code: 'NOT_IMPLEMENTED',
-          message: 'Session creation not yet implemented in GameService'
+        success: true,
+        data: {
+          sessionId: session.getSessionId(),
+          userId: session.getUserId(),
+          gameId: session.getGameId(),
+          createdAt: session.getCreatedAt()
         }
       };
 
@@ -175,7 +194,7 @@ export class GameService {
       return {
         success: false,
         error: {
-          code: 'SESSION_CREATION_ERROR',
+          code: error instanceof GameError ? error.code : 'SESSION_CREATION_ERROR',
           message: error instanceof Error ? error.message : 'Failed to create session'
         }
       };

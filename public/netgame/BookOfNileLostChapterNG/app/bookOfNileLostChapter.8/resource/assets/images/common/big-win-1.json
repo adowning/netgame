@@ -1,0 +1,47 @@
+{"frames": {
+
+"BG_light1.png":
+{
+	"frame": {"x":1,"y":1191,"w":1536,"h":711},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1536,"h":711},
+	"sourceSize": {"w":1536,"h":711}
+},
+"Groupe of clouds_02.png":
+{
+	"frame": {"x":1617,"y":1,"w":1114,"h":421},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1114,"h":421},
+	"sourceSize": {"w":1114,"h":421}
+},
+"Rays2.png":
+{
+	"frame": {"x":1,"y":1,"w":1614,"h":1188},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1614,"h":1188},
+	"sourceSize": {"w":1614,"h":1188}
+},
+"sparkle_05.png":
+{
+	"frame": {"x":1617,"y":1117,"w":871,"h":343},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":871,"h":343},
+	"sourceSize": {"w":871,"h":343}
+}},
+"animations": {
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "big-win-1.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1",
+	"related_multi_packs": [ "big-win-0.json", "big-win-2.json", "big-win-3.json", "big-win-4.json" ],
+	"smartupdate": "$TexturePacker:SmartUpdate:cc7036a341317d3094e77791fd3c3c6c:36730ff9026c98e83732c365136be2ca:ae5a0ca020cf32c5d1e8a1f57c94086b$"
+}
+}
