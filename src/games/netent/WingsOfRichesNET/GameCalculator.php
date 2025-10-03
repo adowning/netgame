@@ -4,12 +4,10 @@ namespace App\Games\NetEnt\WingsOfRichesNET;
 
 class GameCalculator
 {
-    // Static configuration
     public $Paytable;
     public $reelsStrip;
     public $reelsStripBonus;
 
-    // Properties from gameData
     public $shopPercent;
     public $rtpConfig;
     public $game_stat_in;
@@ -28,7 +26,6 @@ class GameCalculator
             throw new \InvalidArgumentException('Invalid game data provided');
         }
 
-        // Initialize dynamic properties from gameData object
         $this->shopPercent = $gameData->shop->percent;
         $this->rtpConfig = $gameData->rtp ?? [
             'spinChance' => 10,
@@ -44,7 +41,6 @@ class GameCalculator
         $this->slotFreeMpl = $gameData->game->slotFreeMpl ?? 1;
         $this->CurrentDenom = $gameData->game->denomination;
 
-        // Initialize Paytable
         $this->Paytable['SYM_0'] = [0, 0, 0, 0, 0, 0];
         $this->Paytable['SYM_1'] = [0, 0, 0, 5, 20, 75];
         $this->Paytable['SYM_2'] = [0, 0, 0, 0, 0, 0];
@@ -57,12 +53,6 @@ class GameCalculator
         $this->Paytable['SYM_9'] = [0, 0, 0, 6, 25, 100];
         $this->Paytable['SYM_11'] = [0, 0, 0, 4, 15, 50];
         $this->Paytable['SYM_12'] = [0, 0, 0, 3, 10, 25];
-
-
-        // Initialize reel strips
-
-
-        // Initialize game configuration
         $this->slotBonus = true;
         $this->slotWildMpl = 1;
         $this->slotFreeMpl = 1;
@@ -74,9 +64,6 @@ class GameCalculator
                 10, 
                 10
             ];
-
-
-        // Load reel strips from file
         $this->reelsStrip = ['reelStrip1' => [], 'reelStrip2' => [], 'reelStrip3' => [], 'reelStrip4' => [], 'reelStrip5' => []];
         $this->reelsStripBonus = ['reelStrip1' => [], 'reelStrip2' => [], 'reelStrip3' => [], 'reelStrip4' => [], 'reelStrip5' => []];
         $reelsFile = __DIR__ . '/reels.txt';
@@ -109,7 +96,6 @@ class GameCalculator
         $betLine = $gameData->betLine ?? 1;
         $this->AllBet = $betLine * $lines;
 
-        // Extracted spin logic (may require manual adaptation)
 for( $i = 0; $i <= 2000; $i++ ) 
                             {
                                 $totalWin = 0;
@@ -503,7 +489,6 @@ for( $i = 0; $i <= 2000; $i++ )
                             if( $totalWin > 0 ) 
                             {
                                 $slotSettings->SetBank((isset($postData['slotEvent']) ? $postData['slotEvent'] : ''), -1 * $totalWin);
-                                // Removed Laravel dependency
                             }
                             $reels = $tmpReels;
                             $reportWin = $totalWin;
@@ -603,9 +588,6 @@ for( $i = 0; $i <= 2000; $i++ )
                                 $curReels .= $freeState;
                             }
                             $response = '{"responseEvent":"spin","responseType":"' . $postData['slotEvent'] . '","serverResponse":{"Mpl":' . $slotSettings->GetGameData($slotSettings->slotId . 'Mpl') . ',"freeState":"' . $freeState . '","slotLines":' . $lines . ',"slotBet":' . $betline . ',"totalFreeGames":' . $slotSettings->GetGameData($slotSettings->slotId . 'FreeGames') . ',"currentFreeGames":' . $slotSettings->GetGameData($slotSettings->slotId . 'CurrentFreeGame') . ',"Balance":' . $balanceInCents . ',"afterBalance":' . $balanceInCents . ',"bonusWin":' . $slotSettings->GetGameData($slotSettings->slotId . 'BonusWin') . ',"totalWin":' . $totalWin . ',"winLines":[],"Jackpots":' . $jsJack . ',"reelsSymbols":' . $jsSpin . '}}';
-                            
-
-        // Return serverResponse structure
         return [
             'BonusSymbol' => -1,
             'slotLines' => $lines,
@@ -631,5 +613,4 @@ for( $i = 0; $i <= 2000; $i++ )
         ];
     }
 
-    // Additional methods may be needed based on extracted logic
 }

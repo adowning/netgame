@@ -4,12 +4,10 @@ namespace App\Games\NetEnt\StarBurstNET;
 
 class GameCalculator
 {
-    // Static configuration
     public $Paytable;
     public $reelsStrip;
     public $reelsStripBonus;
 
-    // Properties from gameData
     public $shopPercent;
     public $rtpConfig;
     public $game_stat_in;
@@ -28,7 +26,6 @@ class GameCalculator
             throw new \InvalidArgumentException('Invalid game data provided');
         }
 
-        // Initialize dynamic properties from gameData object
         $this->shopPercent = $gameData->shop->percent;
         $this->rtpConfig = $gameData->rtp ?? [
             'spinChance' => 10,
@@ -44,7 +41,6 @@ class GameCalculator
         $this->slotFreeMpl = $gameData->game->slotFreeMpl ?? 1;
         $this->CurrentDenom = $gameData->game->denomination;
 
-        // Initialize Paytable
         $this->Paytable['SYM_1'] = [0, 0, 0, 0, 0, 0];
         $this->Paytable['SYM_2'] = [0, 0, 0, 0, 0, 0];
         $this->Paytable['SYM_3'] = [0, 0, 0, 50, 200, 250];
@@ -54,12 +50,6 @@ class GameCalculator
         $this->Paytable['SYM_7'] = [0, 0, 0, 7, 15, 40];
         $this->Paytable['SYM_8'] = [0, 0, 0, 5, 10, 25];
         $this->Paytable['SYM_9'] = [0, 0, 0, 5, 10, 25];
-
-
-        // Initialize reel strips
-
-
-        // Initialize game configuration
         $this->slotBonus = true;
         $this->slotWildMpl = 1;
         $this->slotFreeMpl = 1;
@@ -71,9 +61,6 @@ class GameCalculator
                 1, 
                 1
             ];
-
-
-        // Load reel strips from file
         $this->reelsStrip = ['reelStrip1' => [], 'reelStrip2' => [], 'reelStrip3' => [], 'reelStrip4' => [], 'reelStrip5' => []];
         $this->reelsStripBonus = ['reelStrip1' => [], 'reelStrip2' => [], 'reelStrip3' => [], 'reelStrip4' => [], 'reelStrip5' => []];
         $reelsFile = __DIR__ . '/reels.txt';
@@ -106,7 +93,6 @@ class GameCalculator
         $betLine = $gameData->betLine ?? 1;
         $this->AllBet = $betLine * $lines;
 
-        // Extracted spin logic (may require manual adaptation)
 for( $i = 0; $i <= 2000; $i++ ) 
                             {
                                 $totalWin = 0;
@@ -387,7 +373,6 @@ for( $i = 0; $i <= 2000; $i++ )
                             if( $totalWin > 0 ) 
                             {
                                 $slotSettings->SetBank((isset($postData['slotEvent']) ? $postData['slotEvent'] : ''), -1 * $totalWin);
-                                // Removed Laravel dependency
                             }
                             $reportWin = $totalWin;
                             if( $postData['slotEvent'] == 'freespin' ) 
@@ -441,9 +426,6 @@ for( $i = 0; $i <= 2000; $i++ )
                                 $result_tmp[] = 'rs.i0.r.i1.pos=18&g4mode=false&game.win.coins=' . $totalWin . '&playercurrency=%26%23x20AC%3B&playercurrencyiso=' . $slotSettings->slotCurrency . '&historybutton=false&rs.i0.r.i1.hold=false&rs.i0.r.i4.hold=false&gamestate.history=basic&playforfun=false&jackpotcurrencyiso=' . $slotSettings->slotCurrency . '&clientaction=' . $nextaction . '&rs.i0.r.i2.hold=false&game.win.cents=' . ($totalWin * $slotSettings->CurrentDenomination * 100) . '&rs.i0.r.i2.pos=47&rs.i0.id=basic&totalwin.coins=' . $totalWin . '&credit=' . $balanceInCents . '&totalwin.cents=' . ($totalWin * $slotSettings->CurrentDenomination * 100) . '&gamestate.current=basic&gameover=true&rs.i0.r.i0.hold=false&last.rs=basic&jackpotcurrency=%26%23x20AC%3B&multiplier=1&rs.i0.r.i3.pos=4&rs.i0.r.i4.pos=5&isJackpotWin=false&gamestate.stack=basic&nextaction=' . $nextaction . '&rs.i0.r.i0.pos=7&wavecount=1&gamesoundurl=&rs.i0.r.i3.hold=false&game.win.amount=' . ($totalWin / $slotSettings->CurrentDenomination) . '' . $curReels . $winString . implode('', $holdReels);
                             }
                             $response = '{"responseEvent":"spin","responseType":"' . $postData['slotEvent'] . '","serverResponse":{"freeState":"' . $freeState . '","slotLines":' . $lines . ',"slotBet":' . $betline . ',"totalFreeGames":' . $slotSettings->GetGameData('StarBurstNETFreeGames') . ',"currentFreeGames":' . $slotSettings->GetGameData('StarBurstNETCurrentFreeGame') . ',"Balance":' . $balanceInCents . ',"afterBalance":' . $balanceInCents . ',"bonusWin":' . $slotSettings->GetGameData('StarBurstNETBonusWin') . ',"totalWin":' . $totalWin . ',"winLines":[],"Jackpots":' . $jsJack . ',"reelsSymbols":' . $jsSpin . '}}';
-                            
-
-        // Return serverResponse structure
         return [
             'BonusSymbol' => -1,
             'slotLines' => $lines,
@@ -469,5 +451,4 @@ for( $i = 0; $i <= 2000; $i++ )
         ];
     }
 
-    // Additional methods may be needed based on extracted logic
 }

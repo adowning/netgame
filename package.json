@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "mysql2": "^3.15.1",
+    "netgame-server": ".",
     "pg": "^8.16.3"
   },
   "devDependencies": {
@@ -75,5 +76,6 @@
   "bugs": {
     "url": "https://github.com/your-org/netgame-server/issues"
   },
-  "homepage": "https://github.com/your-org/netgame-server#readme"
+  "homepage": "https://github.com/your-org/netgame-server#readme",
+  "private": true
 }

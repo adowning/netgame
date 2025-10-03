@@ -1,15 +1,7 @@
 import { GameSession, GameError } from '../../game-session/GameSession';
-import { PHPCalculator } from '../../game-session/PHPCalculator';
+import { PHPCalculator, GameData, SpinData } from './PHPCalculator';
 import { BalanceManager } from '../../game-session/BalanceManager';
 import { GameSessionManager } from '../../game-session/GameSessionManager';
-import {
-  SpinRequest,
-  SpinResponse,
-  SpinResult,
-  GameData,
-  PHPProcessResult,
-  RTPConfig
-} from '../../game-session/types';
 import { config } from '../config';
 
 export interface GameServiceOptions {
@@ -40,14 +32,23 @@ export interface GameServiceResponse {
 }
 
 export class GameService {
-  private phpCalculator: PHPCalculator;
+  private phpCalculators: Map<string, PHPCalculator> = new Map();
   private balanceManager: BalanceManager;
   private sessionManager: GameSessionManager;
 
   constructor(options: GameServiceOptions = {}) {
-    this.phpCalculator = options.phpCalculator || new PHPCalculator('', config.get('php').timeoutMs);
     this.balanceManager = options.balanceManager || new BalanceManager();
     this.sessionManager = options.sessionManager || new GameSessionManager(this.phpCalculator);
+  }
+
+  /**
+   * Get or create a PHP calculator for a specific game
+   */
+  private getPHPCalculator(gameName: string): PHPCalculator {
+    if (!this.phpCalculators.has(gameName)) {
+      this.phpCalculators.set(gameName, new PHPCalculator(gameName));
+    }
+    return this.phpCalculators.get(gameName)!;
   }
 
   /**

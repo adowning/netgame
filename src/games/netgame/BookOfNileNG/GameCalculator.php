@@ -90,8 +90,6 @@ class GameCalculator
         $this->reelStripBonus4 = $this->reelStripBonus1;
         $this->reelStripBonus5 = $this->reelStripBonus1;
     }
-
-
     public function calculateSpin($spinData)
     {
         $linesId = $this->getLinesId();
@@ -140,7 +138,6 @@ class GameCalculator
                         $tmpStringWin = '{"type":"LineWinAmount","selectedLine":"' . $k . '","amount":"' . $tmpWin . '","wonSymbols":[["0","' . $p0 . '"]]}';
                     }
                 }
-                // Add checks for 2, 3, 4, 5 symbol wins...
             }
 
             if ($this->getCWin($k) > 0 && $tmpStringWin != '') {

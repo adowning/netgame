@@ -4,12 +4,10 @@ namespace App\Games\NetEnt\FortuneRangersNET;
 
 class GameCalculator
 {
-    // Static configuration
     public $Paytable;
     public $reelsStrip;
     public $reelsStripBonus;
 
-    // Properties from gameData
     public $shopPercent;
     public $rtpConfig;
     public $game_stat_in;
@@ -28,7 +26,6 @@ class GameCalculator
             throw new \InvalidArgumentException('Invalid game data provided');
         }
 
-        // Initialize dynamic properties from gameData object
         $this->shopPercent = $gameData->shop->percent;
         $this->rtpConfig = $gameData->rtp ?? [
             'spinChance' => 10,
@@ -44,7 +41,6 @@ class GameCalculator
         $this->slotFreeMpl = $gameData->game->slotFreeMpl ?? 1;
         $this->CurrentDenom = $gameData->game->denomination;
 
-        // Initialize Paytable
         $this->Paytable['SYM_0'] = [0, 0, 0, 0, 0, 0];
         $this->Paytable['SYM_1'] = [0, 0, 0, 0, 0, 0];
         $this->Paytable['SYM_2'] = [0, 0, 0, 0, 0, 0];
@@ -54,12 +50,6 @@ class GameCalculator
         $this->Paytable['SYM_6'] = [0, 0, 0, 4, 8, 30];
         $this->Paytable['SYM_7'] = [0, 0, 0, 3, 5, 20];
         $this->Paytable['SYM_8'] = [0, 0, 0, 3, 5, 20];
-
-
-        // Initialize reel strips
-
-
-        // Initialize game configuration
         $this->slotBonus = true;
         $this->slotWildMpl = 1;
         $this->slotFreeMpl = 1;
@@ -71,9 +61,6 @@ class GameCalculator
                 12, 
                 16
             ];
-
-
-        // Load reel strips from file
         $this->reelsStrip = ['reelStrip1' => [], 'reelStrip2' => [], 'reelStrip3' => [], 'reelStrip4' => [], 'reelStrip5' => []];
         $this->reelsStripBonus = ['reelStrip1' => [], 'reelStrip2' => [], 'reelStrip3' => [], 'reelStrip4' => [], 'reelStrip5' => []];
         $reelsFile = __DIR__ . '/reels.txt';
@@ -106,435 +93,11 @@ class GameCalculator
         $betLine = $gameData->betLine ?? 1;
         $this->AllBet = $betLine * $lines;
 
-        // Extracted spin logic (may require manual adaptation)
-for( $i = 0; $i <= 2000; $i++ ) 
-                            {
-                                $totalWin = 0;
-                                $lineWins = [];
-                                $cWins = [
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0, 
-                                    0
-                                ];
-                                $wild = ['1'];
-                                $scatter = '0';
-                                $reels = $slotSettings->GetReelStrips($winType, $postData['slotEvent']);
-                                $tmpReels = $reels;
-                                $randWild = rand(1, 50);
-                                $isWild = false;
-                                if( $randWild == 1 ) 
-                                {
-                                    $rr = rand(1, 2);
-                                    if( $rr == 1 ) 
-                                    {
-                                        $reels['reel3'][0] = '1';
-                                        $reels['reel3'][1] = '1';
-                                        $reels['reel3'][2] = '1';
-                                        $reels['reel3'][3] = '1';
-                                    }
-                                    if( $rr == 2 ) 
-                                    {
-                                        $reels['reel4'][0] = '1';
-                                        $reels['reel4'][1] = '1';
-                                        $reels['reel4'][2] = '1';
-                                        $reels['reel4'][3] = '1';
-                                    }
-                                    $isWild = true;
-                                }
-                                $winLineCount = 0;
-                                for( $k = 0; $k < 76; $k++ ) 
-                                {
-                                    $tmpStringWin = '';
-                                    for( $j = 0; $j < count($slotSettings->SymbolGame); $j++ ) 
-                                    {
-                                        $csym = (string)$slotSettings->SymbolGame[$j];
-                                        if( $csym == $scatter || !isset($slotSettings->Paytable['SYM_' . $csym]) ) 
-                                        {
-                                        }
-                                        else
-                                        {
-                                            $s = [];
-                                            $s[0] = $reels['reel1'][$linesId[$k][0] - 1];
-                                            $s[1] = $reels['reel2'][$linesId[$k][1] - 1];
-                                            $s[2] = $reels['reel3'][$linesId[$k][2] - 1];
-                                            $s[3] = $reels['reel4'][$linesId[$k][3] - 1];
-                                            $s[4] = $reels['reel5'][$linesId[$k][4] - 1];
-                                            if( ($s[0] == $csym || in_array($s[0], $wild)) && ($s[1] == $csym || in_array($s[1], $wild)) && ($s[2] == $csym || in_array($s[2], $wild)) ) 
-                                            {
-                                                $mpl = 1;
-                                                if( in_array($s[0], $wild) && in_array($s[1], $wild) && in_array($s[2], $wild) ) 
-                                                {
-                                                    $mpl = 1;
-                                                }
-                                                else if( in_array($s[0], $wild) || in_array($s[1], $wild) || in_array($s[2], $wild) ) 
-                                                {
-                                                    $mpl = $slotSettings->slotWildMpl;
-                                                }
-                                                $tmpWin = $slotSettings->Paytable['SYM_' . $csym][3] * $betline * $mpl * $bonusMpl;
-                                                if( $cWins[$k] < $tmpWin ) 
-                                                {
-                                                    $cWins[$k] = $tmpWin;
-                                                    $tmpStringWin = '&ws.i' . $winLineCount . '.reelset=basic&ws.i' . $winLineCount . '.types.i0.coins=' . $tmpWin . '&ws.i' . $winLineCount . '.pos.i0=0%2C' . ($linesId[$k][0] - 1) . '&ws.i' . $winLineCount . '.pos.i1=1%2C' . ($linesId[$k][1] - 1) . '&ws.i' . $winLineCount . '.pos.i2=2%2C' . ($linesId[$k][2] - 1) . '&ws.i' . $winLineCount . '.types.i0.wintype=coins&ws.i' . $winLineCount . '.betline=' . $k . '&ws.i' . $winLineCount . '.sym=SYM' . $csym . '&ws.i' . $winLineCount . '.direction=left_to_right&ws.i' . $winLineCount . '.types.i0.cents=' . ($tmpWin * $slotSettings->CurrentDenomination * 100) . '';
-                                                    $mainSymAnim = $csym;
-                                                }
-                                            }
-                                            if( ($s[0] == $csym || in_array($s[0], $wild)) && ($s[1] == $csym || in_array($s[1], $wild)) && ($s[2] == $csym || in_array($s[2], $wild)) && ($s[3] == $csym || in_array($s[3], $wild)) ) 
-                                            {
-                                                $mpl = 1;
-                                                if( in_array($s[0], $wild) && in_array($s[1], $wild) && in_array($s[2], $wild) && in_array($s[3], $wild) ) 
-                                                {
-                                                    $mpl = 1;
-                                                }
-                                                else if( in_array($s[0], $wild) || in_array($s[1], $wild) || in_array($s[2], $wild) || in_array($s[3], $wild) ) 
-                                                {
-                                                    $mpl = $slotSettings->slotWildMpl;
-                                                }
-                                                $tmpWin = $slotSettings->Paytable['SYM_' . $csym][4] * $betline * $mpl * $bonusMpl;
-                                                if( $cWins[$k] < $tmpWin ) 
-                                                {
-                                                    $cWins[$k] = $tmpWin;
-                                                    $tmpStringWin = '&ws.i' . $winLineCount . '.reelset=basic&ws.i' . $winLineCount . '.types.i0.coins=' . $tmpWin . '&ws.i' . $winLineCount . '.pos.i0=0%2C' . ($linesId[$k][0] - 1) . '&ws.i' . $winLineCount . '.pos.i1=1%2C' . ($linesId[$k][1] - 1) . '&ws.i' . $winLineCount . '.pos.i2=2%2C' . ($linesId[$k][2] - 1) . '&ws.i' . $winLineCount . '.pos.i3=3%2C' . ($linesId[$k][3] - 1) . '&ws.i' . $winLineCount . '.types.i0.wintype=coins&ws.i' . $winLineCount . '.betline=' . $k . '&ws.i' . $winLineCount . '.sym=SYM' . $csym . '&ws.i' . $winLineCount . '.direction=left_to_right&ws.i' . $winLineCount . '.types.i0.cents=' . ($tmpWin * $slotSettings->CurrentDenomination * 100) . '';
-                                                    $mainSymAnim = $csym;
-                                                }
-                                            }
-                                            if( ($s[0] == $csym || in_array($s[0], $wild)) && ($s[1] == $csym || in_array($s[1], $wild)) && ($s[2] == $csym || in_array($s[2], $wild)) && ($s[3] == $csym || in_array($s[3], $wild)) && ($s[4] == $csym || in_array($s[4], $wild)) ) 
-                                            {
-                                                $mpl = 1;
-                                                if( in_array($s[0], $wild) && in_array($s[1], $wild) && in_array($s[2], $wild) && in_array($s[3], $wild) && in_array($s[4], $wild) ) 
-                                                {
-                                                    $mpl = 1;
-                                                }
-                                                else if( in_array($s[0], $wild) || in_array($s[1], $wild) || in_array($s[2], $wild) || in_array($s[3], $wild) || in_array($s[4], $wild) ) 
-                                                {
-                                                    $mpl = $slotSettings->slotWildMpl;
-                                                }
-                                                $tmpWin = $slotSettings->Paytable['SYM_' . $csym][5] * $betline * $mpl * $bonusMpl;
-                                                if( $cWins[$k] < $tmpWin ) 
-                                                {
-                                                    $cWins[$k] = $tmpWin;
-                                                    $tmpStringWin = '&ws.i' . $winLineCount . '.reelset=basic&ws.i' . $winLineCount . '.types.i0.coins=' . $tmpWin . '&ws.i' . $winLineCount . '.pos.i0=0%2C' . ($linesId[$k][0] - 1) . '&ws.i' . $winLineCount . '.pos.i1=1%2C' . ($linesId[$k][1] - 1) . '&ws.i' . $winLineCount . '.pos.i2=2%2C' . ($linesId[$k][2] - 1) . '&ws.i' . $winLineCount . '.pos.i3=3%2C' . ($linesId[$k][3] - 1) . '&ws.i' . $winLineCount . '.pos.i4=4%2C' . ($linesId[$k][4] - 1) . '&ws.i' . $winLineCount . '.types.i0.wintype=coins&ws.i' . $winLineCount . '.betline=' . $k . '&ws.i' . $winLineCount . '.sym=SYM' . $csym . '&ws.i' . $winLineCount . '.direction=left_to_right&ws.i' . $winLineCount . '.types.i0.cents=' . ($tmpWin * $slotSettings->CurrentDenomination * 100) . '';
-                                                    $mainSymAnim = $csym;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if( $cWins[$k] > 0 && $tmpStringWin != '' ) 
-                                    {
-                                        array_push($lineWins, $tmpStringWin);
-                                        $totalWin += $cWins[$k];
-                                        $winLineCount++;
-                                    }
-                                }
-                                $scattersWin = 0;
-                                $scattersStr = '';
-                                $scattersCount = 0;
-                                $scPos = [];
-                                for( $r = 1; $r <= 5; $r++ ) 
-                                {
-                                    for( $p = 0; $p <= 4; $p++ ) 
-                                    {
-                                        if( $reels['reel' . $r][$p] == $scatter ) 
-                                        {
-                                            $scattersCount++;
-                                            $scPos[] = '&ws.i0.pos.i' . ($r - 1) . '=' . ($r - 1) . '%2C' . $p . '';
-                                        }
-                                    }
-                                }
-                                if( $scattersCount >= 3 ) 
-                                {
-                                    $scattersStr = '&ws.i0.types.i0.freespins=' . $slotSettings->slotFreeCount[$scattersCount] . '&ws.i0.reelset=basic&ws.i0.betline=null&ws.i0.types.i0.wintype=freespins&ws.i0.direction=none' . implode('', $scPos);
-                                }
-                                $totalWin += $scattersWin;
-                                if( $i > 1000 ) 
-                                {
-                                    $winType = 'none';
-                                }
-                                if( $i > 1500 ) 
-                                {
-                                    $response = '{"responseEvent":"error","responseType":"' . $postData['slotEvent'] . '","serverResponse":"Bad Reel Strip"}';
-                                    exit( $response );
-                                }
-                                    if( $slotSettings->MaxWin < ($totalWin * $slotSettings->CurrentDenom) ) 
-                                    {
-                                    }
-                                else
-                                {
-                                    $minWin = $slotSettings->GetRandomPay();
-                                    if( $i > 700 ) 
-                                    {
-                                        $minWin = 0;
-                                    }
-                                    if( $slotSettings->increaseRTP && $winType == 'win' && $totalWin < ($minWin * $allbet) ) 
-                                    {
-                                    }
-                                    else if( $scattersCount >= 3 && $winType != 'bonus' ) 
-                                    {
-                                    }
-                                    else if( $totalWin <= $spinWinLimit && $winType == 'bonus' ) 
-                                    {
-                                        $cBank = $slotSettings->GetBank((isset($postData['slotEvent']) ? $postData['slotEvent'] : ''));
-                                        if( $cBank < $spinWinLimit ) 
-                                        {
-                                            $spinWinLimit = $cBank;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    else if( $totalWin > 0 && $totalWin <= $spinWinLimit && $winType == 'win' ) 
-                                    {
-                                        $cBank = $slotSettings->GetBank((isset($postData['slotEvent']) ? $postData['slotEvent'] : ''));
-                                        if( $cBank < $spinWinLimit ) 
-                                        {
-                                            $spinWinLimit = $cBank;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    else if( $totalWin == 0 && $winType == 'none' ) 
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
                             $freeState = '';
                             $wildStr = '';
                             if( $totalWin > 0 ) 
                             {
                                 $slotSettings->SetBank((isset($postData['slotEvent']) ? $postData['slotEvent'] : ''), -1 * $totalWin);
-                                // Removed Laravel dependency
                                 if( $isWild ) 
                                 {
                                     if( $rr = 1 ) 
@@ -619,9 +182,6 @@ for( $i = 0; $i <= 2000; $i++ )
                                 $curReels .= $freeState;
                             }
                             $response = '{"responseEvent":"spin","responseType":"' . $postData['slotEvent'] . '","serverResponse":{"freeState":"' . $freeState . '","slotLines":' . $lines . ',"slotBet":' . $betline . ',"totalFreeGames":' . $slotSettings->GetGameData('FortuneRangersNETFreeGames') . ',"currentFreeGames":' . $slotSettings->GetGameData('FortuneRangersNETCurrentFreeGame') . ',"Balance":' . $balanceInCents . ',"afterBalance":' . $balanceInCents . ',"bonusWin":' . $slotSettings->GetGameData('FortuneRangersNETBonusWin') . ',"totalWin":' . $totalWin . ',"winLines":[],"Jackpots":' . $jsJack . ',"reelsSymbols":' . $jsSpin . '}}';
-                            
-
-        // Return serverResponse structure
         return [
             'BonusSymbol' => -1,
             'slotLines' => $lines,
@@ -647,5 +207,4 @@ for( $i = 0; $i <= 2000; $i++ )
         ];
     }
 
-    // Additional methods may be needed based on extracted logic
 }

@@ -7,7 +7,6 @@ class DirectPHPHandler
     public static function main()
     {
         try {
-            // Read JSON input from stdin
             $input = file_get_contents('php://stdin');
             $data = json_decode($input, true);
 
@@ -19,17 +18,13 @@ class DirectPHPHandler
                 throw new \Exception('Missing gameData in input');
             }
 
-            // Instantiate calculator
             $calculator = new GameCalculator((object)$data['gameData']);
 
-            // Execute spin calculation
             $result = $calculator->calculateSpin($data);
 
-            // Output JSON result
             echo json_encode($result);
 
         } catch (\Exception $e) {
-            // Error handling
             $errorResponse = [
                 'error' => true,
                 'message' => $e->getMessage(),
@@ -61,7 +56,6 @@ class DirectPHPHandler
     }
 }
 
-// Execute if called directly
 if (basename(__FILE__) === basename($_SERVER['PHP_SELF'])) {
     DirectPHPHandler::main();
 }

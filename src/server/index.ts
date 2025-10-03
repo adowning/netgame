@@ -11,6 +11,23 @@ import { config } from "./config";
 const sessionManager = new GameSessionManager(new PHPCalculator("", 30000));
 const gameService = new GameService({ sessionManager });
 const sessionMiddleware = SessionMiddleware.create({ sessionManager });
+
+// Load game data at server start
+let gameData: any = null;
+try {
+  const gameDataFile = Bun.file("./game-data.json");
+  if (await gameDataFile.exists()) {
+    gameData = await gameDataFile.json();
+    console.log(`✅ Loaded game data with ${gameData?.length || 0} games`);
+  } else {
+    console.warn("⚠️  game-data.json not found, /api/games will return empty array");
+    gameData = [];
+  }
+} catch (error) {
+  console.error("❌ Failed to load game-data.json:", error);
+  gameData = [];
+}
+
 // WebSocket server not used in current testing
 // const wsServer = new WebSocketServer(gameService);
 
@@ -137,13 +154,7 @@ async function handleRequest(request: Request): Promise<Response> {
     // Game data endpoint
     if (path === "/api/games" && method === "GET") {
       try {
-        let developer = request.headers.get("developer");
-        if (!developer) developer = "netent";
-        // const gameData = await Bun.file(
-        //   `./games/${developer}/${developer}-data.json`
-        // ).json();
-        const gameData = await Bun.file(`./ws.md`);
-        const response = JSON.stringify(gameData);
+        const response = JSON.stringify(gameData || []);
         return new Response(response, {
           status: 200,
           headers: {
