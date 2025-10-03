@@ -1,0 +1,53 @@
+{
+  "gameData": {
+    "user": {
+      "id": 1,
+      "balance": 1000,
+      "count_balance": 0,
+      "address": 0
+    },
+    "game": {
+      "id": 1,
+      "name": "AfricanKingNG",
+      "denomination": 0.01,
+      "rtp": 95,
+      "bet": ["1", "2", "5", "10"],
+      "stat_in": 0,
+      "stat_out": 0,
+      "slotBonus": true,
+      "increaseRTP": 1,
+      "slotWildMpl": 1,
+      "slotFreeMpl": 1
+    },
+    "shop": {
+      "percent": 95,
+      "max_win": 1000000
+    }
+  },
+  "action": "calculateSpin",
+  "slotEvent": "bet",
+  "lines": 20,
+  "betLine": 1,
+  "linesId": [
+    [1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0],
+    [2, 2, 2, 2, 2],
+    [0, 1, 2, 1, 0],
+    [2, 1, 0, 1, 2],
+    [1, 0, 1, 2, 1],
+    [1, 2, 1, 0, 1],
+    [0, 0, 1, 2, 2],
+    [2, 2, 1, 0, 0],
+    [0, 1, 0, 1, 0],
+    [2, 1, 2, 1, 2],
+    [1, 0, 0, 0, 1],
+    [1, 2, 2, 2, 1],
+    [0, 1, 1, 1, 0],
+    [2, 1, 1, 1, 2],
+    [1, 1, 0, 1, 1],
+    [1, 1, 2, 1, 1],
+    [0, 2, 0, 2, 0],
+    [2, 0, 2, 0, 2],
+    [2, 0, 1, 0, 2]
+  ]
+}
